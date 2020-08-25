@@ -35,7 +35,7 @@ set laststatus=2
 " by default, you can't backspace before the insertion point set with 'i'.
 " This configuration makes backspace behave more reasonably, in that you can
 " backspace over anything.
-"set backspace=indent,eol,start
+set backspace=indent,eol,start
 
 " By default, Vim doesn't let you hide a buffer (i.e. have a buffer that isn't
 " shown in any window) that has unsaved changes. This is to prevent you from "
@@ -78,3 +78,12 @@ nnoremap <Down>  :echoe "Use j"<CR>
 " inoremap <Right> <ESC>:echoe "Use l"<CR>
 " inoremap <Up>    <ESC>:echoe "Use k"<CR>
 " inoremap <Down>  <ESC>:echoe "Use j"<CR>
+
+" Highlight searches
+set hlsearch
+
+" Show the cursor position
+set ruler
+
+" Highlight current line
+set cursorline
