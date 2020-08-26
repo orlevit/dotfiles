@@ -134,3 +134,7 @@ set -o vi
 export EDITOR=vim
 
 source ~/.aliases
+source ~/.functions
+
+# Switch caps lock and Esc
+setxkbmap -option caps:swapescape
