@@ -138,3 +138,4 @@ source ~/.functions
 
 # Switch caps lock and Esc
 setxkbmap -option caps:swapescape
+
