@@ -85,5 +85,6 @@ set hlsearch
 " Show the cursor position
 set ruler
 
-" Highlight current line
-set cursorline
+" Highlight current line when in 'insert' mode and remove in when in normal mode
+:autocmd InsertEnter * set cul
+:autocmd InsertLeave * set nocul
