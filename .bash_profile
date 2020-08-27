@@ -146,8 +146,8 @@ else
 fi
 if [[ -n $prompt_user_host_color ]]; then      # Remote color
   PS1='\[\e['$prompt_user_host_color'm\]\u@\h'
-elsei                                          # Local color 
-  PS1='{debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:'
+else                                           # Local color 
+  PS1='\[\033[01;32m\]\u@\h\[\033[00m\]'
 fi
 PS1+=':\[\033[01;34m\]\w\[\033[00m\]\$'
 
