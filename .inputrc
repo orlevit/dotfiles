@@ -1,0 +1,7 @@
+# This should change the curser if you are in insert mode or normal mode
+# If the readlines is version<7 then it will use the automatic configuration# and when show-mode-in-prompt on then it will set 'insert mode' = +
+# and 'normal mode' = :
+
+set show-mode-in-prompt on
+set vi-ins-mode-string \1\e[5 q\2
+set vi-cmd-mode-string \1\e[2 q\2
