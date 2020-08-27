@@ -1,0 +1,10 @@
+[user]
+	email = orlevitas@gmail.com
+	name = Or Levitas
+[push]
+	default = simple
+[core]
+	editor = vim
+[alias]
+	bsu = branch --set-upstream-to=origin/master
+	dog = log --all --decorate --oneline --graph
