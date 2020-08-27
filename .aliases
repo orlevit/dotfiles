@@ -26,6 +26,11 @@ alias v="vim"
 alias sl=ls
 
 # Alias can be composed
+alias l='ls -CF'
 alias la="ls -A"
+alias ll='ls -alF'
 alias lla="la -l"
+
+# auto coonection remote
+alias domain1="ssh direct -t 'cd work/project; bash'"
 
