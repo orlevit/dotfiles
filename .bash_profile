@@ -138,19 +138,20 @@ source ~/.functions
 # Switch caps lock and Esc
 setxkbmap -option caps:swapescape
 
+# Color change in the command line for remote SSH connections 
 if [[ -n $SSH_CLIENT ]]; then
-	prompt_user_host_color='1;35';; # magenta on example.com
-	prompt_user_host_color='1;33';; # yellow elsewhere
+  prompt_user_host_color='1;35'
 else
   unset prompt_user_host_color # omitted on the local machine
 fi
-if [[ -n $prompt_user_host_color ]]; then
+if [[ -n $prompt_user_host_color ]]; then      # Remote color
   PS1='\[\e['$prompt_user_host_color'm\]\u@\h'
-else
-  PS1=
+elsei                                          # Local color 
+  PS1='{debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:'
 fi
 PS1+=':\[\033[01;34m\]\w\[\033[00m\]\$'
 
+# Original linux PS1 colors, keep for now
 #$PS1={debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
 
 # colors of ls command
