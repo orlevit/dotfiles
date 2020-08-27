@@ -11,7 +11,7 @@ link () {
 	if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
 		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md') ; do
 			[ -f "$HOME/$file" ] && rm  "$HOME/$file"
-			ln -sv "$pwd/$file" "$HOME"
+			ln -svf "$PWD/$file" "$HOME"
 		done
 		echo "$PROMPT Symlinking complete"
 	else
