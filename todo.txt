@@ -1,3 +1,2 @@
-GIT:
-1) add set stream to branch that no need  specify the branch(especially in master)
-2) set graph that see the logs history nicely
+add a script that install plugins
+
