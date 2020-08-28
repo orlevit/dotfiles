@@ -9,3 +9,8 @@ function mkd() {
 function fs() {
 	du -sh "$@"
 }
+
+# cd into directory and ls 
+cdls() {
+       	cd "$@" && ls;
+ }
