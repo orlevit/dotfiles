@@ -1,5 +1,6 @@
 !/usr/bin/env bash
-PROMPT='[Boostrap]'
+
+source .exports
 
 # Link the files in $HOME to the dotfile in the directory
 link () {
@@ -9,7 +10,7 @@ link () {
 	echo "$PROMPT Proceed? (y/n)"
 	read resp
 	if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md') ; do
+		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md|.exports') ; do
 			[ -f "$HOME/$file" ] && rm  "$HOME/$file"
 			ln -svf "$PWD/$file" "$HOME"
 		done
