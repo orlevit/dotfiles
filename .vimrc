@@ -102,8 +102,39 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+" Enable better fold
+Plugin 'tmhedberg/SimpylFold'
+
+" indent and closesly to PEP8
+Plugin 'vim-scripts/indentpython.vim'
 
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+" end Vundle definitions
+
+" split the screen in specific locations
+set splitbelow
+set splitright
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+"Enable folding with the spacebar
+nnoremap <space> za
+
+" mark extra whitespace
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set encoding=utf-8
+" toggle between hilight search, this is in order to remove the highlisght
+" after search
+nnoremap <F3> :set hlsearch!<CR>
