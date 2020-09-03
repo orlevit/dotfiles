@@ -109,7 +109,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 
 " install code complition
-Plugin 'ycm-core/YouCompleteMe'
+" Plugin 'ycm-core/YouCompleteMe'
 
 " Powerline status bar that displays things like the current virtualenv, git
 " branch, files being edited
@@ -143,7 +143,6 @@ nnoremap <space> za
 " mark extra whitespace
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-set encoding=utf-8
 " toggle between hilight search, this is in order to remove the highlisght
 " after search
 nnoremap <F3> :set hlsearch!<CR>
@@ -153,10 +152,7 @@ let g:Powerline_symbols = 'fancy'
 
 "-------------------- NERDTree Settings --------------------
 " open a NERDTree automatically when vim starts up
-autocmd vimenter * NERDTree
-
-" autocmd vimenter * NERDTree
-autocmd vimenter * NERDTree
+autocmd VimEnter * NERDTree | wincmd p
 
 " open a NERDTree automatically when vim starts up if no files were specified
 autocmd StdinReadPre * let s:std_in=1
