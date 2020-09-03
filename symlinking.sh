@@ -10,7 +10,7 @@ link () {
 	echo "$PROMPT Proceed? (y/n)"
 	read resp
 	if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md|.exports') ; do
+		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md|.exports|.gitignore') ; do
 			[ -f "$HOME/$file" ] && rm  "$HOME/$file"
 			ln -svf "$PWD/$file" "$HOME"
 		done

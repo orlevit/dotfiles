@@ -1,3 +1,4 @@
+
 " omments in Vimscript start with a `"`.
 
 " If you open this file in Vim, it'll be syntax highlighted for you.
@@ -89,87 +90,8 @@ set ruler
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-" Vundle definitions
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" Enable better fold
-Plugin 'tmhedberg/SimpylFold'
-
-" indent and closesly to PEP8
-Plugin 'vim-scripts/indentpython.vim'
-
-" install code complition
-Plugin 'ycm-core/YouCompleteMe'
-
-" Powerline status bar that displays things like the current virtualenv, git
-" branch, files being edited
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-" NERDTree is a file system explorer 
-Plugin 'preservim/nerdtree'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" end Vundle definitions
-
-" split the screen in specific locations
-set splitbelow
-set splitright
-
 "split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-"Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-"Enable folding with the spacebar
-nnoremap <space> za
-
-" mark extra whitespace
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-set encoding=utf-8
-" toggle between hilight search, this is in order to remove the highlisght
-" after search
-nnoremap <F3> :set hlsearch!<CR>
-
-" In documentation for "Powerline" to work
-let g:Powerline_symbols = 'fancy'
-
-"-------------------- NERDTree Settings --------------------
-" open a NERDTree automatically when vim starts up
-autocmd vimenter * NERDTree
-
-" autocmd vimenter * NERDTree
-autocmd vimenter * NERDTree
-
-" open a NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" map a specific key or shortcut to open NERDTree
-map <C-n> :NERDTreeToggle<CR>
-
-" show dot files
-let NERDTreeShowHidden=1
-
-
-"-----------------------------------------------------------
