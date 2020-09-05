@@ -34,3 +34,7 @@ alias lla="la -l"
 # auto coonection remote
 alias domain1="ssh direct -t 'cd work/project; bash'"
 
+# shortcut t pen jupyter notebook and lab
+alias jn="jupyter notebook 2>1 /dev/null &"
+alias jl="jupyter lab 2>1 /dev/null &"
+
