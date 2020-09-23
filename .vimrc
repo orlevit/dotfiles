@@ -166,6 +166,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 " show dot files
 let NERDTreeShowHidden=1
-
-
 "-----------------------------------------------------------
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Green
