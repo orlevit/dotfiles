@@ -89,39 +89,39 @@ set ruler
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-" Vundle definitions
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" Enable better fold
-Plugin 'tmhedberg/SimpylFold'
-
-" indent and closesly to PEP8
-Plugin 'vim-scripts/indentpython.vim'
-
-" install code complition
-" Plugin 'ycm-core/YouCompleteMe'
-
-" Powerline status bar that displays things like the current virtualenv, git
-" branch, files being edited
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-" NERDTree is a file system explorer 
-Plugin 'preservim/nerdtree'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" end Vundle definitions
+"" Vundle definitions
+"filetype off                  " required
+"
+"" set the runtime path to include Vundle and initialize
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+"
+"" alternatively, pass a path where Vundle should install plugins
+""call vundle#begin('~/some/path/here')
+"
+"" let Vundle manage Vundle, required
+"Plugin 'gmarik/Vundle.vim'
+"
+"" Enable better fold
+"Plugin 'tmhedberg/SimpylFold'
+"
+"" indent and closesly to PEP8
+"Plugin 'vim-scripts/indentpython.vim'
+"
+"" install code complition
+"" Plugin 'ycm-core/YouCompleteMe'
+"
+"" Powerline status bar that displays things like the current virtualenv, git
+"" branch, files being edited
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"
+"" NERDTree is a file system explorer 
+"" Plugin 'preservim/nerdtree'
+"
+"" All of your Plugins must be added before the following line
+"call vundle#end()            " required
+"filetype plugin indent on    " required
+"" end Vundle definitions
 
 " split the screen in specific locations
 set splitbelow
@@ -141,33 +141,87 @@ set foldlevel=99
 nnoremap <space> za
 
 " mark extra whitespace
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " toggle between hilight search, this is in order to remove the highlisght
 " after search
 nnoremap <F3> :set hlsearch!<CR>
 
-" In documentation for "Powerline" to work
-let g:Powerline_symbols = 'fancy'
+"" In documentation for "Powerline" to work
+"let g:Powerline_symbols = 'fancy'
 
-"-------------------- NERDTree Settings --------------------
-" open a NERDTree automatically when vim starts up
-autocmd VimEnter * NERDTree | wincmd p
-
-" open a NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" map a specific key or shortcut to open NERDTree
-map <C-n> :NERDTreeToggle<CR>
-
-" show dot files
-let NERDTreeShowHidden=1
-"-----------------------------------------------------------
+""-------------------- NERDTree Settings --------------------
+"" open a NERDTree automatically when vim starts up
+"autocmd VimEnter * NERDTree | wincmd p
+"
+"" open a NERDTree automatically when vim starts up if no files were specified
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"
+"" close vim if the only window left open is a NERDTree
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"
+"" map a specific key or shortcut to open NERDTree
+"map <C-n> :NERDTreeToggle<CR>
+"
+"" show dot files
+"let NERDTreeShowHidden=1
+""-----------------------------------------------------------
+" Same coloe to diff between files, all the color are blue, and text is green
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Green
+
+""------------------------------Find files "fuzzy way"-----------------------------
+" Search down into subfolders, Provides tab-completion for all file-related tasks
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
+" - Hit tab to :find by partial match
+" - Use * to make it fuzzy
+""---------------------------------------------------------------------
+
+""------------------------------show tabs-----------------------------
+" Shortcut to rapidly toggle `set list`
+ nmap <leader>l :set list!<CR>
+
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ 
+
+" Show tabs automaticly
+set list
+
+"Invisible character colors 
+highlight SpecialKey guifg=#4a4a59
+""---------------------------------------------------------------------
+
+""------------------------------netrw-----------------------------
+" hide netrw top message
+let g:netrw_banner=0
+
+" tree listing by default
+let g:netrw_liststyle = 3
+
+"open files in a new horizontal split
+let g:netrw_browse_split = 1
+
+" The width of the directory explorer, x% of total screen
+let g:netrw_winsize = 15
+
+" Open automaticly when vim is uploaded
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+  autocmd VimEnter * wincmd l 
+augroup END
+
+" close the netrw when is the only onw open
+aug netrw_close
+  au!
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw"|q|endif
+aug END
+""----------------------------------------------------------------
+
