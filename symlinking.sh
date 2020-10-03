@@ -10,9 +10,19 @@ link () {
 	echo "$PROMPT Proceed? (y/n)"
 	read resp
 	if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-		for file in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md|.exports|.gitignore') ; do
-			[ -f "$HOME/$file" ] && rm  "$HOME/$file"
-			ln -svf "$PWD/$file" "$HOME"
+		for object in $(ls -A|grep -E '^\.'|grep -Ev '.git$|*.md|.exports|.gitignore') ; do
+			if [ -f $object ] ; then
+				[ -f "$HOME/$file" ] && rm  "$HOME/$file"
+				ln -svf "$PWD/$object" "$HOME"
+			fi
+
+			if [ -d $object ] ; then
+				file=$(find $object -type f)
+				dirs=$(dirname  $file)
+				[ -f "$HOME/$file" ] && rm  "$HOME/$file"
+				mkdir -p $dirs
+				ln -svf "$PWD/$file" "$HOME/$file"
+			fi
 		done
 		echo "$PROMPT Symlinking complete"
 	else
