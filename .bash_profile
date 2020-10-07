@@ -2,6 +2,8 @@
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+export PATH
 
 # If not running interactively, don't do anything(needed for remote accessing)
 case $- in
