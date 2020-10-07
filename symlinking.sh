@@ -21,9 +21,7 @@ link () {
 				dirs=$(dirname  $file)
 				[ -f "$HOME/$file" ] && rm  "$HOME/$file"
 				mkdir -p "${HOME}/${dirs}"
-				#echo $("mkdir -p "${HOME}/${dirs}"")
 				ln -svf "${PWD}/${file}" "${HOME}/${dirs}"
-				#echo $("ln -svf "$PWD/$file" "$HOME/$file"")
 			fi
 		done
 		echo "$PROMPT Symlinking complete"
