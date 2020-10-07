@@ -14,3 +14,14 @@ function fs() {
 cdls() {
        	cd "$@" && ls;
  }
+
+# Copy files from my computer to the openu
+function tou() {
+	scp -o ProxyCommand="ssh -W %h:%p openu" "$@" orlev@my.hpc.pub.lan:~/
+}
+
+# Copy files from openu to the my computer
+function fromu() {
+	scp -o ProxyCommand="ssh -W %h:%p openu"  orlev@my.hpc.pub.lan:~/"$@"  ~/Desktop/
+}
+
