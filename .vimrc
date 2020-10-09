@@ -226,10 +226,11 @@ aug END
 ""----------------------------------------------------------------
 
 ""------------------------------Easy indents-----------------------------
-nmap <S-tab> <<
-nmap <tab> >>
-vmap <s-Tab> <gv
-vmap <Tab> >gv
+" need adjustment - multiple times acting like [[ and ]]
+nmap <leader>[ <<
+nmap <leader>] >>
+vmap <leader>[ <gv
+vmap <leader>] >gv
 ""----------------------------------------------------------------
 
 ""------------------------------Snipping-----------------------------
