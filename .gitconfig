@@ -8,3 +8,4 @@
 [alias]
 	bsu = branch --set-upstream-to=origin/master
 	dog = log --all --decorate --oneline --graph
+	hist = log --all --decorate --oneline --graph

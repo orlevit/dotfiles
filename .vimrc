@@ -237,3 +237,12 @@ vmap <leader>] >gv
 " Pyhton loop snipping
 nnoremap \pl :-1read $HOME/.vim/.skeleton.python.loop<CR>f(a
 ""----------------------------------------------------------------
+
+""------------------------------Edit files easily in different directories-----------------------------
+" %% - will expand the absolute path of the current working file, in order to work on additional files from that directory
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+""----------------------------------------------------------------
