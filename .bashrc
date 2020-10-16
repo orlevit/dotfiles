@@ -132,7 +132,8 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Source the autojump plugin
-. /usr/share/autojump/autojump.sh
+#. /usr/share/autojump/autojump.sh
+[[ -s /home/${USER}/.autojump/etc/profile.d/autojump.sh ]] && source /home/${USER}/.autojump/etc/profile.d/autojump.sh
 
 # Set the editor of the command line & general to vi 
 set -o vi
