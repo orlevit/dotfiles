@@ -11,7 +11,7 @@ function fs() {
 }
 
 # cd into directory and ls 
-cdls() {
+cl() {
        	cd "$@" && ls;
  }
 
