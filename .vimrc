@@ -198,32 +198,32 @@ set list
 highlight SpecialKey guifg=#4a4a59
 ""---------------------------------------------------------------------
 
-""------------------------------netrw-----------------------------
-" hide netrw top message
-let g:netrw_banner=0
-
-" tree listing by default
-let g:netrw_liststyle = 3
-
-"open files in a new horizontal split
-let g:netrw_browse_split = 1
-
-" The width of the directory explorer, x% of total screen
-let g:netrw_winsize = 15
-
-" Open automaticly when vim is uploaded
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-  autocmd VimEnter * wincmd l 
-augroup END
-
-" close the netrw when is the only onw open
-aug netrw_close
-  au!
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw"|q|endif
-aug END
-""----------------------------------------------------------------
+"""------------------------------netrw-----------------------------
+"" hide netrw top message
+"let g:netrw_banner=0
+"
+"" tree listing by default
+"let g:netrw_liststyle = 3
+"
+""open files in a new horizontal split
+"let g:netrw_browse_split = 1
+"
+"" The width of the directory explorer, x% of total screen
+"let g:netrw_winsize = 15
+"
+"" Open automaticly when vim is uploaded
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"  autocmd VimEnter * wincmd l 
+"augroup END
+"
+"" close the netrw when is the only onw open
+"aug netrw_close
+"  au!
+"  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw"|q|endif
+"aug END
+"""----------------------------------------------------------------
 
 ""------------------------------Easy indents-----------------------------
 " need adjustment - multiple times acting like [[ and ]]
