@@ -22,6 +22,6 @@ function tou() {
 
 # Copy files from openu to the my computer
 function fromu() {
-	scp -o ProxyCommand="ssh -W %h:%p openu"  orlev@my.hpc.pub.lan:~/"$@"  ~/Desktop/
+	scp -o ProxyCommand="ssh -W %h:%p openu"  orlev@my.hpc.pub.lan:"$@"  ~/Downloads/
 }
 
