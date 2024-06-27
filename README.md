@@ -1,10 +1,10 @@
-![image](https://github.com/orlevit/dotfiles/tree/master/images/dotfiles_demo.gif)
-
-
 # Dotfiles
 
 Welcome to my dotfiles repository! 
 This repository contains various configuration files and scripts (dotfiles) that I use to personalize and configure my development environment across different Unix-based systems.
+
+# Demo
+![](https://github.com/orlevit/dotfiles/blob/master/images/dotfiles_demo.gif)
 
 ## What are Dotfiles?
 
