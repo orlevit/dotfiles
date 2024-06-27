@@ -1,3 +1,6 @@
+![image](https://github.com/orlevit/dotfiles/tree/master/images/dotfiles_demo.gif)
+
+
 # Dotfiles
 
 Welcome to my dotfiles repository! 
