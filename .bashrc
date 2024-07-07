@@ -179,9 +179,6 @@ export EDITOR=vim
 source ~/.aliases
 source ~/.functions
 
-# Switch caps lock and Esc
-setxkbmap -option caps:swapescape
-
 # Color change in the command line for remote SSH connections 
 if [[ -n $SSH_CLIENT ]]; then
   prompt_user_host_color='1;35'
