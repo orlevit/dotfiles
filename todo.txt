@@ -1,2 +1,4 @@
-add a script that install plugins
+Add vim plugins keyshort to vimc
+add more plugins
+add just command line?
 
