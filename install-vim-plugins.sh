@@ -1,3 +1,1 @@
-source .exports
-
-vim +PlugInstall +qall >> $LOG_FILE
+vim +PlugInstall +qall 
