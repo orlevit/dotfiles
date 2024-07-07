@@ -102,3 +102,18 @@ else
         echo "bat FAILED TO INSTALL!!!" >> "$LOG_FILE"
     fi
 fi
+
+# ----------------------
+# ripgrep installation
+# ----------------------
+if type -p "rg" > /dev/null; then
+    echo "ripgrep already installed" >> $LOG_FILE
+else
+    sudo apt update
+    sudo apt install -y ripgrep
+
+    if type -p "rg" > /dev/null; then
+        echo "ripgrep Installed via apt" >> $LOG_FILE
+    else
+        echo "ripgrep FAILED TO INSTALL via apt!!!" >> $LOG_FILE
+    fi
