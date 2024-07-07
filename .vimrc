@@ -227,6 +227,7 @@ Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 
 " fzf.vim: A fuzzy finder for files, buffers, and more within Vim.
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " End Vim-Plug section
