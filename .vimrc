@@ -89,40 +89,6 @@ set ruler
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-"" Vundle definitions
-"filetype off                  " required
-"
-"" set the runtime path to include Vundle and initialize
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-"
-"" alternatively, pass a path where Vundle should install plugins
-""call vundle#begin('~/some/path/here')
-"
-"" let Vundle manage Vundle, required
-"Plugin 'gmarik/Vundle.vim'
-"
-"" Enable better fold
-"Plugin 'tmhedberg/SimpylFold'
-"
-"" indent and closesly to PEP8
-"Plugin 'vim-scripts/indentpython.vim'
-"
-"" install code complition
-"" Plugin 'ycm-core/YouCompleteMe'
-"
-"" Powerline status bar that displays things like the current virtualenv, git
-"" branch, files being edited
-"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-"
-"" NERDTree is a file system explorer 
-"" Plugin 'preservim/nerdtree'
-"
-"" All of your Plugins must be added before the following line
-"call vundle#end()            " required
-"filetype plugin indent on    " required
-"" end Vundle definitions
-
 " split the screen in specific locations
 set splitbelow
 set splitright
@@ -198,33 +164,34 @@ set list
 highlight SpecialKey guifg=#4a4a59
 ""---------------------------------------------------------------------
 
-"""------------------------------netrw-----------------------------
-"" hide netrw top message
-let g:netrw_banner=0
+""""------------------------------ Built in file navigations-----------------------------
+""""------------------------------ Unnecessary if NERDTree installed -----------------------------
+""" hide netrw top message
+"let g:netrw_banner=0
+""
+""" tree listing by default
+"let g:netrw_liststyle = 3
+""
+"""open files in a new horizontal split
+"let g:netrw_browse_split = 4
+""
+""" The width of the directory explorer, x% of total screen
+"let g:netrw_winsize = 15
+""
+""" Open automaticly when vim is uploaded
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"  autocmd VimEnter * wincmd l 
+"augroup END
+""
+""" close the netrw when is the only onw open
+"aug netrw_close
+"  au!
+"  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw"|q|endif
+"aug END
+""""----------------------------------------------------------------
 "
-"" tree listing by default
-let g:netrw_liststyle = 3
-"
-""open files in a new horizontal split
-let g:netrw_browse_split = 4
-"
-"" The width of the directory explorer, x% of total screen
-let g:netrw_winsize = 15
-"
-"" Open automaticly when vim is uploaded
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-  autocmd VimEnter * wincmd l 
-augroup END
-"
-"" close the netrw when is the only onw open
-aug netrw_close
-  au!
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw"|q|endif
-aug END
-"""----------------------------------------------------------------
-
 ""------------------------------Easy indents-----------------------------
 " need adjustment - multiple times acting like [[ and ]]
 nmap <leader>[ <<
@@ -246,3 +213,21 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 ""----------------------------------------------------------------
+
+" Start Vim-Plug section
+call plug#begin('~/.vim/plugged')
+
+" Surround.vim: Provides mappings to easily delete, change, and add surroundings in pairs.
+Plug 'tpope/vim-surround'
+
+" NERDTree: A file system explorer for the Vim editor.
+Plug 'preservim/nerdtree'
+
+" vim-devicons: Adds file type icons to Vim plugins such as NERDTree.
+Plug 'ryanoasis/vim-devicons'
+
+" fzf.vim: A fuzzy finder for files, buffers, and more within Vim.
+Plug 'junegunn/fzf.vim'
+
+" End Vim-Plug section
+call plug#end()
