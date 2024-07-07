@@ -165,7 +165,7 @@ highlight SpecialKey guifg=#4a4a59
 ""---------------------------------------------------------------------
 
 """"------------------------------ Built in file navigations-----------------------------
-""""------------------------------ Unnecessary if NERDTree installed -----------------------------
+""""------------------------------ Unnecessary if NERDTree installed --------------------
 """ hide netrw top message
 "let g:netrw_banner=0
 ""
@@ -231,3 +231,35 @@ Plug 'junegunn/fzf.vim'
 
 " End Vim-Plug section
 call plug#end()
+
+" ------------------------------ Plugin Configurations ------------------------------
+
+" ----- NERDTree Configurations -----
+" Open NERDTree automatically when Vim starts and no file is specified
+autocmd vimenter * if !argc() | NERDTree | endif
+
+" Set NERDTree to show hidden files
+let NERDTreeShowHidden=1
+
+" Map <C-n> to toggle NERDTree
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+" Close Vim if NERDTree is the only window left
+autocmd bufenter * if (winnr('$') == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" ----- vim-devicons Configurations -----
+" Load vim-devicons plugin after NERDTree
+if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+endif
+
+" ----- fzf.vim Configurations -----
+" Set fzf window options
+let g:fzf_layout = { 'down': '~40%' }
+
+" Map :Files command to <C-p> for fuzzy finding files
+nnoremap <C-p> :Files<CR>
+
+" Set preview window for fzf
+let g:fzf_preview_window = ['right:50%']
+
