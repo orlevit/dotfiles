@@ -30,7 +30,6 @@ Managing dotfiles with Git allows me to track changes over time, synchronize con
 ## Installation
 ```
 git clone https://github.com/orlevit/dotfiles.git
-cd dotfiles
-source install-packages.sh
-source symlinking.sh
+cd dotfile 
+source run.sh
 ```
