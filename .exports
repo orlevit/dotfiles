@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Defining hyper-parameters 
 PROMPT='[Boostrap]'					# Name for the prompt in the bottstapping script
 PATH_TO_ADDITIONAL_PACKAGES="$PWD/Additional_packages"	# Name of the directory that the git add-ons will be 
