@@ -53,27 +53,3 @@ else
         echo "Vim-Plug FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
-
-# Add vim-surround to .vimrc and install plugins
-VIMRC=~/.vimrc
-
-if ! grep -q "Plug 'tpope/vim-surround'" "$VIMRC"; then
-    # Add vim-plug block if not present
-    if ! grep -q "call plug#begin('~/.vim/plugged')" "$VIMRC"; then
-        echo "Adding vim-plug configuration to $VIMRC"
-        echo "
-call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-surround'
-call plug#end()
-" >> "$VIMRC"
-    else
-        echo "Adding vim-surround to existing plug configuration in $VIMRC"
-        sed -i "/call plug#begin('~\/.vim\/plugged')/a\Plug 'tpope/vim-surround'" "$VIMRC"
-    fi
-
-    # Install plugins
-    vim +PlugInstall +qall
-    echo "vim-surround installed" >> $LOG_FILE
-else
-    echo "vim-surround already configured in $VIMRC" >> $LOG_FILE
-fi
