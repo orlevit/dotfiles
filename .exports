@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
 # Defining hyper-parameters 
-PROMPT='[Boostrap]'					# Name for the prompt in the bottstapping script
-PATH_TO_ADDITIONAL_PACKAGES="$PWD/Additional_packages"	# Name of the directory that the git add-ons will be 
-LOG_FILE=./progress_log.txt			# Name of the log file
+PROMPT='[Boostrap]'				      	           # Name for the prompt in the bottstapping script
+PATH_TO_ADDITIONAL_PACKAGES="$PWD/Additional_packages"             # Name of the directory that the git add-ons will be 
+PATH_TO_LAZY_GIT_INSTALLER="$PATH_TO_ADDITIONAL_PACKAGES/lazy.vim" # Name of the directory that the nvim git add-ons will be 
+PATH_TO_NVIM_CONFIG="$PWD/.config/nvim"	                           # Name of the directory of the nvim config
+# PATH_TO_LAZY_MGT_INSTALLER="$PATH_TO_NVIM_CONFIG/lua/config"       # Name of the directory that the nvim config
+LOG_FILE=./progress_log.txt		                           # Name of the log file
+
+PATH_TO_NVIM_INIT_CONFIG_FILE="$PATH_TO_NVIM_CONFIG/init.lua"      # Name of the the init.lua file
+#PATH_TO_LAZY_MGT_INSTALLER_FILE="$PATH_TO_LAZY_MGT_INSTALLER/lazy.lua"  # Name of the Lazy.lua files
+
+NVIM_INIT_LAZY_LOC_ADD="local lazypath='$PATH_TO_LAZY_GIT_INSTALLER'"
 
