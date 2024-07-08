@@ -139,7 +139,7 @@ local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = {'vim'} } } } })
 lspconfig.pylsp.setup({})
 
-function lsp_keymap(bufnr)
+local function lsp_keymap(bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -154,13 +154,11 @@ function lsp_keymap(bufnr)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 end
 
-lspconfig.pylsp.setup({
-  on_attach = function(client , bufnr)
+-- Attach function
+local function on_attach(client, bufnr)
+    print('Attaching to ' .. client.name)
     lsp_keymap(bufnr)
-  end
-})
-lspconfig.lua_ls.setup({
-  on_attach = function(client , bufnr)
-    lsp_keymap(bufnr)
-  end
-})
+end
+
+lspconfig.pylsp.setup{{ on_attach = on_attach}}
+lspconfig.lua_ls.setup { on_attach = on_attach, settings = { Lua = { diagnostics = { globals = {'vim'} } } }}
