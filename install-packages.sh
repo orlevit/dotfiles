@@ -40,20 +40,6 @@ else
     fi
 fi
 
-# vim-plug - plugin manager
-if [[ -f ~/.vim/autoload/plug.vim ]]; then
-    echo "Vim-Plug already installed" >> $LOG_FILE
-else
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-    if [[ -f ~/.vim/autoload/plug.vim ]]; then
-        echo "Vim-Plug Installed" >> $LOG_FILE
-    else
-        echo "Vim-Plug FAILED TO INSTALL!!!" >> $LOG_FILE
-    fi
-fi
-
 # ----------------------
 # bat installation
 # ----------------------
