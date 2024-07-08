@@ -66,7 +66,12 @@ require("lazy").setup({
    	             indent = { enable = true },  
    	           })
    	       end},
- {"catppuccin/nvim", name = "catppuccin", priority = 1000 }
+         {"catppuccin/nvim", name = "catppuccin", priority = 1000 },
+         {'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons'}},
+         { "nvim-tree/nvim-tree.lua", version = "*", lazy = false, dependencies = { "nvim-tree/nvim-web-devicons", }, config = function() require("nvim-tree").setup {} end, },
+         { "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig"}
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -89,3 +94,73 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+
+-------------------------------------------------
+-- Set lualine
+-------------------------------------------------
+require('lualine').setup{options = { theme = 'dracula' }}
+
+
+-------------------------------------------------
+-- Set nvim-tree
+-------------------------------------------------
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require('nvim-web-devicons').setup { default = true }
+require("nvim-tree").setup {}
+
+-- Toggle Tree
+vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
+-- Close nvim-tree when it's the only window left
+  vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("NvimTreeClose", {clear = true}),
+	callback = function()
+		local layout = vim.api.nvim_call_function("winlayout", {})
+		if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then vim.cmd("quit") end
+	end
+})
+
+-------------------------------------------------
+-- Set LSP (mason,mason-lsp,nvim lsp)
+-------------------------------------------------
+require("mason").setup()
+require("mason-lspconfig").setup{ensure_installed = { "lua_ls", "pylsp"}}
+
+-- For each language . nvim lsp
+local lspconfig = require('lspconfig')
+lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = {'vim'} } } } })
+lspconfig.pylsp.setup({})
+
+function lsp_keymap(bufnr)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+end
+
+lspconfig.pylsp.setup({
+  on_attach = function(client , bufnr)
+    lsp_keymap(bufnr)
+  end
+})
+lspconfig.lua_ls.setup({
+  on_attach = function(client , bufnr)
+    lsp_keymap(bufnr)
+  end
+})
