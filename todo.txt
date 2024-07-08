@@ -1,3 +1,4 @@
-add more plugins
-Removal of the first row in the lua.init in case of re-run of the "run.sh" so it won't be duplicated
+1)add more plugins
+2)Removal of the first row in the lua.init in case of re-run of the "run.sh" so it won't be duplicated
+3) Install script for "nerd-fonts" to see th font correctly
 
