@@ -76,6 +76,7 @@ require("lazy").setup({
         { "nvimtools/none-ls.nvim" },
         { "hrsh7th/nvim-cmp" },
         { "L3MON4D3/LuaSnip", dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets"}},
+        {"hrsh7th/cmp-nvim-lsp"},
         checker = { enabled = true },
     },
 })
@@ -150,10 +151,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
 require("mason").setup()
 require("mason-lspconfig").setup({ ensure_installed = { "lua_ls", "pylsp" } })
 
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- For each language . nvim lsp
 local lspconfig = require("lspconfig")
-lspconfig.lua_ls.setup({ settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
-lspconfig.pylsp.setup({})
+lspconfig.lua_ls.setup({ capabilities = capabilities, settings = { Lua = { diagnostics = { globals = { "vim" } } } } })
+lspconfig.pylsp.setup({capabilities = capabilities})
 
 -- Attach function
 local function lsp_on_attach(client, bufnr)
@@ -197,7 +201,7 @@ null_ls.setup({
 })
 
 -------------------------------------------------
--- Nvim-cmp
+-- Automcomplete & snippet (Nvim-cmp,Luasnip,cmp-nvim-lsp
 -------------------------------------------------
 local cmp = require("cmp")
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -227,3 +231,4 @@ cmp.setup({
         { name = 'buffer' },
     })
 })
+
