@@ -54,18 +54,7 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
   spec = {
 	     {'nvim-telescope/telescope.nvim', tag = '0.1.8', dependencies = { 'nvim-lua/plenary.nvim' }},
-         {"nvim-treesitter/nvim-treesitter",
-   	       build = ":TSUpdate",
-   	       config = function () 
-   	         local configs = require("nvim-treesitter.configs")
-
-   	         configs.setup({
-   	             ensure_installed = { "lua", "python" },
-   	             sync_install = false,
-   	             highlight = { enable = true },
-   	             indent = { enable = true },  
-   	           })
-   	       end},
+         {'nvim-telescope/telescope-ui-select.nvim' },
          {"catppuccin/nvim", name = "catppuccin", priority = 1000 },
          {'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons'}},
          { "nvim-tree/nvim-tree.lua", version = "*", lazy = false, dependencies = { "nvim-tree/nvim-web-devicons", }, config = function() require("nvim-tree").setup {} end, },
@@ -96,6 +85,19 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 
+
+-- Add extention to the telescope - UI select plugin
+require("telescope").setup {
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+    }
+  }
+}
+
+require("telescope").load_extension("ui-select")
 -------------------------------------------------
 -- Set lualine
 -------------------------------------------------
