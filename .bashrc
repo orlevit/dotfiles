@@ -174,7 +174,7 @@ if [[ -n $prompt_user_host_color ]]; then      # Remote color
 else                                           # Local color 
   PS1='\[\033[01;32m\]\u@\h\[\033[00m\]'
 fi
-PS1+=':\[\033[01;34m\]\w\[\033[00m\]\$'
+PS1+=':\[\033[0;36m\]\w\[\033[00m\]\$'
 
 # Original linux PS1 colors, keep for now
 #$PS1={debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
