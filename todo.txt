@@ -1,4 +1,14 @@
-1)add more plugins
-2)Removal of the first row in the lua.init in case of re-run of the "run.sh" so it won't be duplicated
-3) Install script for "nerd-fonts" to see th font correctly
+move all dot files to seperate dictionary
+https://www.youtube.com/watch?v=ZDV4edcaXSY
+https://www.youtube.com/watch?v=_YaI2vDbk0o
+tmux multiplexer
+
+-------nvim------:
+add copilot nvim
+nvim notebooks
+install lazygit
+debugger
+auto-remarks in github?
+
+
 
