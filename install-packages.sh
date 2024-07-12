@@ -8,7 +8,7 @@ mkdir -p $PATH_TO_ADDITIONAL_PACKAGES
 echo "Installation Log for date: $(date)" > $LOG_FILE
 
 # ----------------------
-# Git installation 
+# Autojump installation 
 # ----------------------
 
 # autojump
@@ -26,7 +26,9 @@ else
     cd -
 fi
 
+# ----------------------
 # fuzzy finder
+# ----------------------
 if type -p "fzf" > /dev/null; then
     echo "fuzzy finder already installed" >> $LOG_FILE
 else
@@ -103,3 +105,20 @@ else
     else
         echo "ripgrep FAILED TO INSTALL via apt!!!" >> $LOG_FILE
     fi
+fi
+
+# --------------------------------------------
+# tpm (Tmux Plugin Manager) installation
+# --------------------------------------------
+# tpm
+if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
+    echo "tpm already installed" >> $LOG_FILE
+else
+    git clone https://github.com/tmux-plugins/tpm $PATH_TO_ADDITIONAL_PACKAGES/tpm
+
+    if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
+        echo "tpm Installed" >> $LOG_FILE
+    else
+        echo "tpm FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
