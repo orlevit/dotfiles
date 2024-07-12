@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-source .exports
-
 # Function to link dotfiles to home directory
 link () {
+    PROMPT="[INFO]"
     echo "$PROMPT This utility will:"
     echo "$PROMPT 1. Delete existing dotfiles in the home directory"
     echo "$PROMPT 2. Symlink dotfiles from this repository to the home directory"
@@ -30,18 +29,29 @@ link () {
 
             # Check if object is a directory
             if [ -d "$object" ]; then
-                # Find all files recursively in the directory
-                find "$object" -type f | while IFS= read -r file; do
-                    # Get relative path of file inside the directory
-                    rel_path="${file#./}"
-                    # Create directories if they don't exist in home directory
-                    mkdir -p "$HOME/$(dirname "$rel_path")"
-                    # Create symlink
-                    ln -svf "$PWD/$file" "$HOME/$rel_path"
-                    echo "Linked $file to $HOME/$rel_path"
-                done
+                # Handle .config directory separately
+                if [ "$object" = ".config" ]; then
+                    find ".config" -type f | while IFS= read -r file; do
+                        rel_path="${file#./}"
+                        mkdir -p "$HOME/$(dirname "$rel_path")"
+                        ln -svf "$PWD/$file" "$HOME/$rel_path"
+                        echo "Linked $file to $HOME/$rel_path"
+                    done
+                else
+                    # Find all files recursively in the directory
+                    find "$object" -type f | while IFS= read -r file; do
+                        # Get relative path of file inside the directory
+                        rel_path="${file#./}"
+                        # Create directories if they don't exist in home directory
+                        mkdir -p "$HOME/$(dirname "$rel_path")"
+                        # Create symlink
+                        ln -svf "$PWD/$file" "$HOME/$rel_path"
+                        echo "Linked $file to $HOME/$rel_path"
+                    done
+                fi
             fi
         done
+
         echo "$PROMPT Symlinking complete"
     else
         echo "$PROMPT Symlinking cancelled by user"
@@ -51,4 +61,3 @@ link () {
 
 # Call the link function
 link
-
