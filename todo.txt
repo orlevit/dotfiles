@@ -1,9 +1,8 @@
-move all dot files to seperate dictionary
-https://www.youtube.com/watch?v=ZDV4edcaXSY
-https://www.youtube.com/watch?v=_YaI2vDbk0o
-tmux multiplexer
-
 -------nvim------:
+
+https://www.youtube.com/watch?v=6pAG3BHurdM&t=134s
+https://www.youtube.com/watch?v=CEMPq_r8UYQ&t=673s
+
 add copilot nvim
 nvim notebooks
 install lazygit
