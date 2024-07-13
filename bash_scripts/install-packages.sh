@@ -52,6 +52,7 @@ else
     git clone https://github.com/junegunn/fzf-git.sh.git $PATH_TO_ADDITIONAL_PACKAGES/fzf-git.sh
     if [ $? -eq 0 ]; then
         echo "fzf-git.sh Installed" >> $LOG_FILE
+        ln -svf "$PATH_TO_ADDITIONAL_PACKAGES/fzf-git.sh" "$HOME/fzf-git.sh" 
     else
         echo "fzf-git.sh FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
