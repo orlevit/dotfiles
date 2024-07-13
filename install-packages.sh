@@ -138,3 +138,38 @@ else
         echo "tpm FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
+
+# --------------------------------------------
+# git-delta installation
+# --------------------------------------------
+
+if type -p delta > /dev/null; then
+    echo "git-delta already installed" >> $LOG_FILE
+else
+    sudo apt-get install -y git-delta
+
+    if type -p delta > /dev/null; then
+        echo "git-delta Installed" >> $LOG_FILE
+    else
+        echo "git-delta FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+
+# --------------------------------------------
+# tldr installation
+# --------------------------------------------
+
+if type -p tldr > /dev/null; then
+    echo "git-delta already installed" >> $LOG_FILE
+else
+    sudo apt install tldr
+
+    if type -p tldr > /dev/null; then
+        echo "tldr Installed" >> $LOG_FILE
+    else
+        echo "tldr FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+
