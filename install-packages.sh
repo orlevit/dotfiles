@@ -11,7 +11,6 @@ echo "Installation Log for date: $(date)" > $LOG_FILE
 # Autojump installation 
 # ----------------------
 
-# autojump
 if type -p autojump > /dev/null; then
     echo "autojump already installed" >> $LOG_FILE
 else
@@ -29,6 +28,7 @@ fi
 # ----------------------
 # fuzzy finder
 # ----------------------
+
 if type -p "fzf" > /dev/null; then
     echo "fuzzy finder already installed" >> $LOG_FILE
 else
@@ -39,6 +39,21 @@ else
         echo "fuzzy finder Installed" >> $LOG_FILE
     else
         echo "fuzzy finder FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+# ----------------------
+# fzf-git.sh installation 
+# ----------------------
+
+if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/fzf-git.sh" ]; then
+    echo "fzf-git.sh already installed" >> $LOG_FILE
+else
+    git clone https://github.com/junegunn/fzf-git.sh.git $PATH_TO_ADDITIONAL_PACKAGES/fzf-git.sh
+    if [ $? -eq 0 ]; then
+        echo "fzf-git.sh Installed" >> $LOG_FILE
+    else
+        echo "fzf-git.sh FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
 
@@ -94,6 +109,7 @@ fi
 # ----------------------
 # ripgrep installation
 # ----------------------
+
 if type -p "rg" > /dev/null; then
     echo "ripgrep already installed" >> $LOG_FILE
 else
@@ -110,7 +126,7 @@ fi
 # --------------------------------------------
 # tpm (Tmux Plugin Manager) installation
 # --------------------------------------------
-# tpm
+
 if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
     echo "tpm already installed" >> $LOG_FILE
 else
