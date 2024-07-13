@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
-# Defining hyper-parameters 
-PROMPT='[Boostrap]'				      	           # Name for the prompt in the bottstapping script
-PATH_TO_ADDITIONAL_PACKAGES="$PWD/Additional_packages"             # Name of the directory that the git add-ons will be 
-PATH_TO_LAZY_GIT_INSTALLER="$PATH_TO_ADDITIONAL_PACKAGES/lazy.vim" # Name of the directory that the nvim git add-ons will be 
-DOTFILES_DIR="$PWD/dotfiles_to_link"	                           # Name of the directory of the nvim config
-PATH_TO_NVIM_CONFIG="$DOTFILES_DIR/.config/nvim"	                           # Name of the directory of the nvim config
-LOG_FILE=./progress_log.txt		                           # Name of the log file
+# Define paths and directories used in the bootstrap script
 
-PATH_TO_NVIM_INIT_CONFIG_FILE="$PATH_TO_NVIM_CONFIG/init.lua"      # Name of the the init.lua file
+# Base prompt for logging and user messages
+PROMPT='[Bootstrap]'  # Name for the prompt in the bootstrapping script
 
-NVIM_INIT_LAZY_LOC_ADD="local lazypath='$PATH_TO_LAZY_GIT_INSTALLER'"
-DOT_CONFIG_DIR_LINK=("nvim" "i3")
+# Paths to various directories
+PATH_TO_ADDITIONAL_PACKAGES="$PWD/Additional_packages"  # Directory for additional git add-ons
+PATH_TO_LAZY_GIT_INSTALLER="$PATH_TO_ADDITIONAL_PACKAGES/lazy.vim"  # Directory for the nvim git add-ons
+DOTFILES_DIR="$PWD/dotfiles_to_link"  # Directory containing dotfiles to link
+PATH_TO_NVIM_CONFIG="$DOTFILES_DIR/.config/nvim"  # Path to the nvim configuration directory
+LOG_FILE="./installation_progress_log.txt"  # Log file to record progress
+
+# Path to the nvim init configuration file
+PATH_TO_NVIM_INIT_CONFIG_FILE="$PATH_TO_NVIM_CONFIG/init.lua"  # Path to the init.lua file
+
+# Lazy loading configuration string
+NVIM_INIT_LAZY_LOC_ADD="local lazypath='$PATH_TO_LAZY_GIT_INSTALLER'"  # Location for lazy.nvim
+
+# Array of directories to link for dotfiles
+DOT_CONFIG_DIR_LINK=("nvim" "i3")  # List of dotfiles to link
