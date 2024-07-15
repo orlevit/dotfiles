@@ -11,16 +11,6 @@ case $- in
       *) return;;
 esac
 
-################################ Constants ################################
-
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
 ######################## shopt(shell behavior) ############################
 
 # append to the history file, don't overwrite it
@@ -39,6 +29,20 @@ shopt -s cdspell
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
+
+# don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTCONTROL=ignoredups:erasedups
+PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+
+# zsh autocomplete sytle
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
+# Enable history search with arrow keys
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 ############################################################33 what are those??????
 
 
