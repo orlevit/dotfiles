@@ -75,22 +75,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
@@ -173,12 +157,18 @@ if [[ -n $SSH_CLIENT ]]; then
 else
   unset prompt_user_host_color # omitted on the local machine
 fi
+
+# Show git branch
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
 if [[ -n $prompt_user_host_color ]]; then      # Remote color
   PS1='\[\e['$prompt_user_host_color'm\]\u@\h'
 else                                           # Local color 
   PS1='\[\033[01;32m\]\u@\h\[\033[00m\]'
 fi
-PS1+=':\[\033[0;36m\]\w\[\033[00m\]\$'
+PS1+=":\[\033[0;36m\]\w\[\033[00m\]\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$"
 
 # Original linux PS1 colors, keep for now
 #$PS1={debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
