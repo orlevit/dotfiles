@@ -158,9 +158,19 @@ else
   unset prompt_user_host_color # omitted on the local machine
 fi
 
-# Show git branch
+# Show git branch add indiction of something changed
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    # Get the current branch name
+    local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+    if [ -n "$branch" ]; then
+        # Check for uncommitted changes
+        local status=$(git status --porcelain 2> /dev/null)
+        local status_indicator=""
+        if [ -n "$status" ]; then
+            status_indicator="*"
+        fi
+        echo "($branch$status_indicator)"
+    fi
 }
 
 if [[ -n $prompt_user_host_color ]]; then      # Remote color
