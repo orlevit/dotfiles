@@ -4,11 +4,11 @@ Welcome to my dotfiles repository!
 
 **What are Dotfiles?** 
 
-Dotfiles are configuration files for applications and tools that start with a dot (e.g., `.bashrc`, `.vimrc`), these files are often hidden by default on Unix-like systems.
+Dotfiles are hidden configuration files for applications and tools that start with a dot (e.g., *.bashrc*, *.vimrc*) on Unix-like systems.
 
 **Why use my Dotfiles?**
 
-Minimalistic, effective, campatabile for bash shell and easy to install!
+Minimalistic, effective, compatible with the bash shell and easy to install!
 
 # Table of contents:
 - [Demo](#Demo)
