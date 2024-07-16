@@ -50,8 +50,8 @@ source run.sh
 - **`vim-test.lua`**: Run tests within the editor.
 
 ## Organization
-
-- **`bash_scripts`**: Bash scripts that responsible for the installation.
-- **`dotfiles_to_link`**: Dotfiles to link from home directory to the current repository.
-- **`.exports`**: Constants for the run.sh script.- 
-- **`run.sh`**: The installation script.
+#### Main directories and files:
+- **`bash_scripts`(Directory)**: Bash scripts that responsible for the installation.
+- **`dotfiles_to_link`(Directory)**: Dotfiles to link from home directory to the current repository.
+- **`.exports` (File)**: Constants for the run.sh script.- 
+- **`run.sh` (File)**: The installation script.
