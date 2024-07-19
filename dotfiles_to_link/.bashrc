@@ -39,6 +39,7 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 # zsh autocomplete sytle
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
+bind '"\e[Z": menu-complete-backward'
 
 # Enable history search with pgdown\pgup keys
 bind '"\e[5~":history-search-backward'
