@@ -40,9 +40,10 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
-# Enable history search with arrow keys
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+# Enable history search with pgdown\pgup keys
+bind '"\e[5~":history-search-backward'
+bind '"\e[6~":history-search-forward'
+
 ############################################################33 what are those??????
 
 
