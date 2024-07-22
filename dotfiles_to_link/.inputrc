@@ -1,3 +1,15 @@
+# zsh autocomplete style
+set show-all-if-ambiguous on
+TAB: menu-complete
+"\e[Z": menu-complete-backward
+
+# Enable history search with PgUp/PgDn keys
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+
+# Disable the error voice
+set bell-style none
+
 # This should change the curser if you are in insert mode or normal mode
 # If the readlines is version<7 then it will use the automatic configuration# and when show-mode-in-prompt on then it will set 'insert mode' = +
 # and 'normal mode' = :
