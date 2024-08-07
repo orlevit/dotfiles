@@ -1,2 +1,3 @@
 Additional_packages
 installation_progress_log.txt
+dotfiles_to_link/.config/nvim/lazy-lock.json
