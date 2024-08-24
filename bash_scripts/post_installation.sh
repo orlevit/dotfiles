@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-source install-vim_plugins.sh
+source bash_scripts/install-vim-plugins.sh
 source ~/.bashrc
