@@ -29,11 +29,15 @@ source run.sh
 ## Plugins
 
 #### Bash Plugins
-- **`Autojump`**: Quickly navigate the filesystem by learning your most frequented directories.
-- **`Fzf`**: Command-line fuzzy finder for files, command history, and more.
+- **`autojump`**: Quickly navigate the filesystem by learning your most frequented directories.
+- **`fzf`**: Command-line fuzzy finder for files, command history, and more.
 - **`fzf-git.sh`**: Integrates `Fzf` with git for interactive git commands.
 - **`Lazy.vim`**: Simplifies Neovim setup with default configurations and tools.
-- **`Tpm`**: Tmux Plugin Manager for easy plugin management in Tmux.
+- **`tpm`**: Tmux Plugin Manager for easy plugin management in Tmux.
+- **`git-delta`**: A syntax-highlighting pager for git and diff output to enhance readability.
+- **`ripgrep`**: A fast search tool like `grep`, but optimized for recursive search and written in Rust.
+- **`bat`**: A `cat` clone with syntax highlighting and Git integration to view file contents in a more readable format.
+- **`tldr`**: Simplified and community-driven man pages to provide practical examples for common commands.
 
 #### Nvim Plugins
 - **`alpha.lua`**: Start screen with configurable sections.
