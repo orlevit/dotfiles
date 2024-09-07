@@ -101,7 +101,6 @@ if [ -f ~/.fzf.bash ]; then
 		--bind 'ctrl-a:select-all'
 		--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
 fi
-# 		--bind 'ctrl-e:executevirtualenvwrapper{+} | xargs -o vim)'"
 
 # Source the autojump plugin
 [[ -s /home/${USER}/.autojump/etc/profile.d/autojump.sh ]] && source /home/${USER}/.autojump/etc/profile.d/autojump.sh
