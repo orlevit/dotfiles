@@ -35,3 +35,7 @@ alias lla="la -l"
 alias jn="jupyter notebook 2> /dev/null &"
 alias jl="jupyter lab 2> /dev/null &"
 
+# Instead of "cat"
+alias cat="batcat"
+
+

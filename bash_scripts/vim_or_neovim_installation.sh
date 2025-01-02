@@ -11,11 +11,11 @@ read choice
 case $choice in
     1)
         # Call vim-installation.sh script
-        ./vim-installation.sh
+        source ./bash_scripts/vim-installation.sh
         ;;
     2)
         # Call nvim-installation.sh script
-        ./nvim-installation.sh
+        source ./bash_scripts/nvim-installation.sh
         ;;
     *)
         echo "Invalid choice. Exiting..."
