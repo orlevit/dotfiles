@@ -23,5 +23,5 @@ fi
 # ---------------
 # Lazy installation and configuration
 # ---------------
-./add_to_top_of_file.sh $PATH_TO_NVIM_INIT_CONFIG_FILE "$NVIM_INIT_LAZY_LOC_ADD"
+source ./bash_scripts/add_to_top_of_file.sh $PATH_TO_NVIM_INIT_CONFIG_FILE "$NVIM_INIT_LAZY_LOC_ADD"
 echo "Add location of lazy insatllation that in Additioanl_packages"
