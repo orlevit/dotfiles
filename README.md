@@ -5,7 +5,8 @@ Welcome to my dotfiles repository!
 **What are Dotfiles?** 
 
 Dotfiles are hidden configuration files for applications and tools that start with a dot (e.g., *.bashrc*, *.vimrc*) on Unix-like systems.
-In addition, Neovim plugins are installed to provide an IDE-like experience.
+Additionly, Neovim plugins are installed to provide an IDE-like experience.
+
 
 **Why use my Dotfiles?**
 
@@ -19,6 +20,7 @@ Minimalistic, effective, compatible with the bash shell and easy to install!
 
 # Demos
 Unix terminal:
+
 ![](https://github.com/orlevit/dotfiles/blob/master/images/dotfiles_demo.gif)
 
 Neovim:
