@@ -31,3 +31,7 @@
 
 [diff]
     colorMoved = default
+[credential]
+	helper = store
+[http]
+	postBuffer = 524288000

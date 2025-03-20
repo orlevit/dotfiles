@@ -37,5 +37,4 @@ alias jl="jupyter lab 2> /dev/null &"
 
 # Instead of "cat"
 alias cat="batcat"
-
-
+alias tree='tree -C'
