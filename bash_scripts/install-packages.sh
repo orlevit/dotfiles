@@ -140,4 +140,18 @@ else
     fi
 fi
 
+# ----------------------
+# Tree installation
+# ----------------------
 
+if type -p tree > /dev/null; then
+    echo "tree already installed" >> $LOG_FILE
+else
+    sudo apt-get update && sudo apt-get install -y tree
+
+    if type -p tree > /dev/null; then
+        echo "tree Installed" >> $LOG_FILE
+    else
+        echo "tree FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi

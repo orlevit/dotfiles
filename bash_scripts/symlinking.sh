@@ -2,7 +2,7 @@
 
 source .exports
 
-# Function to link dotfiles to home directory
+# Function to link dotfiles to the home directory
 link() {
     PROMPT="[INFO]"
     echo "$PROMPT This utility will:"
@@ -21,29 +21,29 @@ link() {
                 # Construct full path for the object in the home directory
                 target="$HOME/$filename"
 
-                # Remove existing files or symlinks
-                if [ -f "$target" ]; then
+                # Remove existing files, directories, or symlinks
+                if [ -e "$target" ]; then
                     rm -rf "$target"
                 fi
 
-                # Check if the object is the .config folder
+                # Handle the .config folder
                 if [ "$filename" == ".config" ] && [ -d "$object" ]; then
-                    # Create dir if not exists
-                    home_config_path="$HOME/$filename"
-                    if [ ! -d "$home_config_path" ]; then
-                        mkdir -p "$home_config_path"
-                    fi
+                    # Ensure the .config directory exists in $HOME
+                    mkdir -p "$HOME/.config"
 
-                    # Link specific files inside .config
-                    for config_file in "${DOT_CONFIG_DIR_LINK[@]}"; do
-                        config_path="$object/$config_file"
-                        if [ -e "$config_path" ]; then
-                            ln -svf "$config_path" "$HOME/$filename/$config_file"
-                        else
-                            echo "$PROMPT $config_path does not exist"
+                    # Iterate through each subdirectory in .config
+                    for subdir in "$object"/*; do
+                        subdir_name=$(basename "$subdir")
+                        config_target="$HOME/$filename/$subdir_name"
+
+                        # Remove existing subdirectory or symlink
+                        if [ -e "$config_target" ]; then
+                            rm -rf "$config_target"
                         fi
-                    done
 
+                        # Symlink the subdirectory
+                        ln -svf "$subdir" "$config_target"
+                    done
                 else
                     # Create symlink for other dotfiles
                     ln -svf "$object" "$target"
@@ -70,4 +70,3 @@ link() {
 
 # Call the link function
 link
-
