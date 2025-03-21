@@ -15,6 +15,9 @@ tmux select-pane -t 0
 VENV_DIR="~/dev/invoice_system/invoice"
 tmux send-keys "source ${VENV_LOC}/bin/activate " C-m
 tmux send-keys "cd ${WORKING_DIR} && nvim main.py" C-m
+for i in {1..10}; do
+    tmux resize-pane -D
+done
 
 # Configure the second pane: Go to the working directory
 tmux select-pane -t 1
