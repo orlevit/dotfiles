@@ -30,8 +30,15 @@ return {
         capabilities = capabilities
       })
       lspconfig.lua_ls.setup({
-        capabilities = capabilities
-      })
+        capabilities = capabilities,
+        settings = {
+           Lua = {
+               diagnostics = {
+               -- Get the language server to recognize the `vim` global
+               globals = {
+                 'vim',
+                 'require'
+           }}}}})
       lspconfig.pyright.setup({
         capabilities = capabilities,
         filetype={"python"}
