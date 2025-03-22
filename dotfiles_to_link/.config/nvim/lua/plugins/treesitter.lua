@@ -12,13 +12,13 @@ return {
         incremental_selection = {
                  enable = true,
                  keymaps = {
-                   init_selection = "<C-space>",
-                   node_incremental = "<C-space>",
-                   scope_incremental = false,
-                   node_decremental = "<bs>",
+                       init_selection = "<leader>s",        -- Start selection
+                       node_incremental = "<leader>s",     -- Increment node
+                       scope_incremental = false,   -- Increment scope
+                       node_decremental = "<bs>",          -- Decrement node
                  },
         },
       })
-    end
+    end,
   }
 }
