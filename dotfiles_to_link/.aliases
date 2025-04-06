@@ -38,3 +38,8 @@ alias jl="jupyter lab 2> /dev/null &"
 # Instead of "cat"
 alias cat="batcat"
 alias tree='tree -C'
+
+# present images only in kitty
+if [ -n "$KITTY_WINDOW_ID" ]; then
+  alias icat='kitty +kitten icat'
+fi

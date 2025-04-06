@@ -155,3 +155,24 @@ else
         echo "tree FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
+
+# ----------------------
+# Kitty installation
+# ----------------------
+
+if type -p kitty > /dev/null; then
+    echo "kitty already installed" >> $LOG_FILE
+else
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
+    # Add symlink
+    mkdir -p ~/.local/bin
+    ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
+
+    # Confirm install
+    if type -p kitty > /dev/null; then
+        echo "kitty Installed" >> $LOG_FILE
+    else
+        echo "kitty FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
