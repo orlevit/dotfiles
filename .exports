@@ -20,3 +20,8 @@ NVIM_INIT_LAZY_LOC_ADD="local lazypath='$PATH_TO_LAZY_GIT_INSTALLER'"  # Locatio
 
 # Array of directories to link for dotfiles
 DOT_CONFIG_DIR_LINK=("nvim" "i3")  # List of dotfiles to link
+
+# Kitty
+KITTY_BIN="$HOME/.local/bin/kitty"
+KITTY_CONF_DIR="$HOME/.config/kitty"
+KITTY_CONF_FILE="$KITTY_CONF_DIR/kitty.conf"

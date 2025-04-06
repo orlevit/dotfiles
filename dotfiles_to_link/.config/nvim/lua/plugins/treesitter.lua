@@ -10,7 +10,7 @@ return {
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed = {"python", "lua", "html", "markdown","json","bash","gitignore"},
+        ensure_installed = {"python", "lua", "html", "markdown","json","bash","gitignore", "markdown", "markdown_inline"},
         incremental_selection = {
                  enable = true,
                  keymaps = {

@@ -4,6 +4,7 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",  -- This will build the jsregexp dependency
     dependencies = {
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
