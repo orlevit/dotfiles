@@ -43,3 +43,6 @@ alias tree='tree -C'
 if [ -n "$KITTY_WINDOW_ID" ]; then
   alias icat='kitty +kitten icat'
 fi
+
+# color rgrep
+alias rgrep="rgrep --color"
