@@ -36,7 +36,7 @@ return {
               command = { "bash" }
             },
             python = {
---              command = { "ipython" },
+             -- command = { "ipython" },
                 command = { "jupyter-console"},
 
               format = common.bracketed_paste_python,
@@ -58,8 +58,8 @@ keymaps = {
           -- send_paragraph = "<space>rp",
           -- send_until_cursor = "<space>ru",
           -- send_mark = "<space>rm",
-          -- send_code_block = "<space>rb",
-          -- send_code_block_and_move = "<space>rn",
+          send_code_block = "<space>bc",
+          send_code_block_and_move = "<space>bn",
           -- mark_motion = "<space>mc",
           -- mark_visual = "<space>mc",
           -- remove_mark = "<space>md",
@@ -82,8 +82,8 @@ keymaps = {
       vim.keymap.set('n', '<space>rp', function() iron.send_paragraph() end, { noremap = true, silent = true })
       vim.keymap.set('n', '<space>ru', function() iron.send_until_cursor() end, { noremap = true, silent = true })
       -- vim.keymap.set('n', '<space>rm', function() iron.send_mark() end, { noremap = true, silent = true })
-      vim.keymap.set('n', '<space>rb', function() iron.send_code_block() end, { noremap = true, silent = true })
-      --vim.keymap.set('n', '<space>rn', function() iron.send_code_block_and_move() end, { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<space>rb', function() iron.send_code_block() end, { noremap = true, silent = true })
+      -- vim.keymap.set('n', '<space>rn', function() iron.send_code_block_and_move() end, { noremap = true, silent = true })
 
       -- vim.keymap.set('n', '<space>rx', function() iron.mark_motion() end, { noremap = true, silent = true })
       -- vim.keymap.set('v', '<space>rx', function() iron.mark_visual() end, { noremap = true, silent = true })
@@ -99,4 +99,3 @@ keymaps = {
     end
   },
 }
-
