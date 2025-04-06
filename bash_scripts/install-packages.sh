@@ -176,3 +176,32 @@ else
         echo "kitty FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
+
+# ----------------------
+# Virtualenvwrapper installation
+# ----------------------
+
+if python3 -c "import virtualenvwrapper" 2>/dev/null; then
+    echo "virtualenvwrapper already installed" >> $LOG_FILE
+else
+    # Install virtualenvwrapper using apt
+    sudo apt-get install -y virtualenvwrapper
+    
+    # Verify installation
+    if python3 -c "import virtualenvwrapper" 2>/dev/null; then
+        echo "virtualenvwrapper Installed" >> $LOG_FILE
+    else
+        # Create a virtual environment first
+        python3 -m venv ~/.py_global_env
+        
+        # Activate and install virtualenvwrapper in it
+        source ~/.py_global_env/bin/activate
+        pip install virtualenvwrapper
+        
+        if python3 -c "import virtualenvwrapper" 2>/dev/null; then
+            echo "virtualenvwrapper Installed via fallback method" >> $LOG_FILE
+        else
+            echo "virtualenvwrapper FAILED TO INSTALL VIA FALLBACK METHOD!!!" >> $LOG_FILE
+        fi
+    fi
+fi
