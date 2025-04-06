@@ -150,11 +150,13 @@ NVM_DIR="$HOME/.nvm"
 bind '"\C-l":clear-screen'
 
 # Virtual env wrapper
-WORKON_HOME=$HOME/.virtualenvs
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+PROJECT_HOME="$HOME/dev"
+WORKON_HOME="$HOME/.virtualenvs"
+VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 
 if [ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]; then
     source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 # Check if fallback path exists
 elif [ -f "$HOME/.py_global_env/bin/virtualenvwrapper.sh" ]; then
     source $HOME/.py_global_env/bin/virtualenvwrapper.sh
+fi
