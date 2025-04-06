@@ -142,10 +142,19 @@ source ~/fzf-git.sh/fzf-git.sh
 source ~/.aliases
 source ~/.functions
 
-export NVM_DIR="$HOME/.nvm"
+NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # C+l clear
 bind '"\C-l":clear-screen'
 
+# Virtual env wrapper
+WORKON_HOME=$HOME/.virtualenvs
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+
+if [ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]; then
+    source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+# Check if fallback path exists
+elif [ -f "$HOME/.py_global_env/bin/virtualenvwrapper.sh" ]; then
+    source $HOME/.py_global_env/bin/virtualenvwrapper.sh

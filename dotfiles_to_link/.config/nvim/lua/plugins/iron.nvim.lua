@@ -36,7 +36,9 @@ return {
               command = { "bash" }
             },
             python = {
-              command = { "ipython" },
+--              command = { "ipython" },
+                command = { "jupyter-console"},
+
               format = common.bracketed_paste_python,
               block_dividers = { "# %%", "#%%", "##" },
             }
@@ -46,7 +48,7 @@ return {
           end,
           repl_open_cmd = view.split.vertical("40%"),
         },
-        keymaps = {
+keymaps = {
           toggle_repl = "<space>rr",
           restart_repl = "<space>rR",
           -- send_motion = "<space>rs",
