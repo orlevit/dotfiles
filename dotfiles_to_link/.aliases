@@ -46,3 +46,6 @@ fi
 
 # color rgrep
 alias rgrep="rgrep --color"
+
+# text editor alias
+alias te="gnome-text-editor"
