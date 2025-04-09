@@ -9,24 +9,7 @@ return {
 
 
 
-      local function my_formatter(lines, extras)
-        local result = {}
-
-        -- fallback if extras is nil
-        extras = extras or {}
-        extras.block_dividers = extras.block_dividers or { "# %%", "#%%", "%%" }
-
-        -- filter out lines starting with #
-        for _, line in ipairs(lines) do
-          if not vim.startswith(line, "#") then
-            table.insert(result, line)
-          end
-        end
-
-        return require("iron.fts.common").bracketed_paste_python(result, extras)
-      end
-
-
+      local python_format = require("iron.fts.common").bracketed_paste_python
 
       iron.setup {
         config = {
@@ -37,9 +20,10 @@ return {
             },
             python = {
              -- command = { "ipython" },
-                command = { "jupyter-console"},
+                -- command = { "jupyter-console"},
+            command = { 'ipython', '--no-autoindent' },
 
-              format = common.bracketed_paste_python,
+              format = python_format, -- common.bracketed_paste_python,
               block_dividers = { "# %%", "#%%", "##" },
             }
           },
