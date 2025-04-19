@@ -20,6 +20,10 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local lspconfig = require("lspconfig")
+      local venv = os.getenv("VIRTUAL_ENV")
+      local pylsp_cmd = venv
+        and { venv .. "/bin/python", "-m", "pylsp" }
+        or { "pylsp" }
       lspconfig.ts_ls.setup({
         capabilities = capabilities
       })
@@ -39,14 +43,31 @@ return {
                  'vim',
                  'require'
            }}}}})
-      lspconfig.pyright.setup({
+      -- lspconfig.pyright.setup({
+      --   capabilities = capabilities,
+      --   filetype={"python"}
+      -- })
+      lspconfig.pylsp.setup({
+        cmd = pylsp_cmd,
         capabilities = capabilities,
-        filetype={"python"}
+        filetypes    = { "python" },
+        settings = {
+          pylsp = {
+            plugins = {
+              pyflakes   = { enabled = true },   -- basic error checking
+              pyls_mypy  = { enabled = false },  -- turn off mypy plugin if present
+              pylint     = { enabled = true,
+                -- disable the “missing module docstring” check (C0114)
+                             args = { "--disable=C0114" },},
+              jedi_hover = { enabled = true },   -- enable hover provider
+            }
+          }
+        }
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "gD", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
     end,
   },
