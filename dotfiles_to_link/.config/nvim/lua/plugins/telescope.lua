@@ -34,5 +34,7 @@ return {
       vim.keymap.set("n", "<leader>to", builtin.oldfiles, { desc = "Fuzzy find recent files" })
       vim.keymap.set("n", "<leader>tc", builtin.grep_string, { desc = "Find string under cursor in cwd" })
       vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Find keymaps" })
+      vim.keymap.set("n", "<leader>tb", builtin.buffers, { desc = "Find among open buffers" })
+      vim.keymap.set("n", "<leader>tm", builtin.buffers, { desc = "Find marks" })
   end,
 }
