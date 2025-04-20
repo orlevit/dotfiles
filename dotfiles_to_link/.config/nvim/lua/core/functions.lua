@@ -170,12 +170,12 @@ local function goto_cell(direction)
   local pattern = "^# %%"
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
   local line_count = vim.api.nvim_buf_line_count(0)
-  
+
   -- Direction: 1 for next, -1 for previous
   local step = direction > 0 and 1 or -1
   local start_line = current_line + step
   local end_line = direction > 0 and line_count or 1
-  
+
   for line_num = start_line, end_line, step do
     local line = vim.api.nvim_buf_get_lines(0, line_num-1, line_num, false)[1]
     if line and line:match(pattern) then
@@ -183,11 +183,28 @@ local function goto_cell(direction)
       return
     end
   end
-  
+
   print("No " .. (direction > 0 and "next" or "previous") .. " cell found")
 end
 
 -- Set up keymaps
 vim.keymap.set({'n','x'}, ']b', function() goto_cell(1) end, {desc = "Next code cell"})
 vim.keymap.set({'n','x'}, '[b', function() goto_cell(-1) end, {desc = "Previous code cell"})
+-- ##
+
+-- Show diagnostics
+vim.diagnostic.config({
+  underline = false,
+  virtual_text = false,
+  signs = true,
+  update_in_insert = false,
+})
+
+local show_diags =true
+vim.keymap.set("n", "<leader>tv", function()
+  show_diags = not show_diags
+  vim.diagnostic.config({
+    signs        = show_diags,
+  })
+end, { desc = "Toggle diagnostics" })
 -- ##

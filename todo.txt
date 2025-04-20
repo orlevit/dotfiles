@@ -1,16 +1,22 @@
 -------nvim------:
-https://www.youtube.com/watch?v=w7i4amO_zaE
-https://www.youtube.com/watch?v=6pAG3BHurdM&t=134s
-https://www.youtube.com/watch?v=CEMPq_r8UYQ&t=673s
-https://www.youtube.com/watch?v=NJDu_53T_4M&t=33s
-
+-- To add -- 
 add copilot nvim
-nvim notebooks
-install lazygit
-debugger
+nvim notebooks?
+debugger?
 auto-remarks in github?
 
-zsh setup?
----auto complete (time 10 min) ---
-https://www.youtube.com/watch?v=uOnL4fEnldA
-https://www.josean.com/posts/how-to-setup-alacritty-terminal
+-- To watch
+-- Lazy git
+https://www.youtube.com/watch?v=CPLdltN7wgE 
+https://www.youtube.com/watch?v=w7i4amO_zaE
+https://www.youtube.com/watch?v=NJDu_53T_4M&t=33s
+
+-- Sources --
+1. https://www.youtube.com/watch?v=6pAG3BHurdM&t=134s
+2. https://www.youtube.com/watch?v=CEMPq_r8UYQ&t=673s
+3. https://www.youtube.com/watch?v=zHTeCSVAFNY&list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn&ab_channel=typecraft
+
+! important !
+For pylint knowledge of the project, add to project folder a file name ".pylintrc" with:
+[MASTER]
+init-hook = 'import sys; sys.path.append("/path/to/workdir")'
