@@ -43,8 +43,8 @@ return {
 		vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
 
 		-- Switch places
-		vim.keymap.set("n", "[t", "<cmd>-tabmove<cr>", { desc = "Move tab left" })
-		vim.keymap.set("n", "]t", "<cmd>+tabmove<cr>", { desc = "Move tab right" })
+		vim.keymap.set("n", "<leader>[t", "<cmd>-tabmove<cr>", { desc = "Move tab left" })
+		vim.keymap.set("n", "<leader>]t", "<cmd>+tabmove<cr>", { desc = "Move tab right" })
 
 		-- Pick a buffer
 		vim.keymap.set("n", "gt", "<cmd>BufferLinePick<cr>", { desc = "Pick buffer" })

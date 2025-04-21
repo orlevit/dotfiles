@@ -5,6 +5,7 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-tree/nvim-web-devicons",
+    "folke/todo-comments.nvim",
   },
   config = function()
     local telescope = require("telescope")
@@ -24,6 +25,7 @@ return {
     })
 
     telescope.load_extension("fzf")
+    telescope.load_extension("todo-comments")
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
@@ -36,5 +38,6 @@ return {
       vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Find keymaps" })
       vim.keymap.set("n", "<leader>tb", builtin.buffers, { desc = "Find among open buffers" })
       vim.keymap.set("n", "<leader>tm", builtin.buffers, { desc = "Find marks" })
+      vim.keymap.set("n", "<leader>tt", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
   end,
 }
