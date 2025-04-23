@@ -1,6 +1,8 @@
 return {
   { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-path" },
+  { "hrsh7th/cmp-buffer" }, -- source for text in buffer
+  { "hrsh7th/cmp-path" }, -- source for file system paths
+  { "onsails/lspkind.nvim" }, -- vs-code like pictograms
   {
     "L3MON4D3/LuaSnip",
     build = "make install_jsregexp",  -- This will build the jsregexp dependency
@@ -13,10 +15,14 @@ return {
     "hrsh7th/nvim-cmp",
     config = function()
       local cmp = require("cmp")
+      local lspkind = require("lspkind")
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
-        snippet = {
+        completion = { -- Control the popup-menu behavior
+          completeopt = "menu,menuone,preview,noselect",
+        },
+        snippet = { -- configure how nvim-cmp interacts with snippet engine
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
           end,
@@ -36,11 +42,16 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
-          { name = "luasnip" }, -- For luasnip users.
+          { name = "luasnip" },
           { name = "path"   },
-        }, {
           { name = "buffer" },
         }),
+        formatting = { -- For vs-code like pictograms in completion menu
+          format = lspkind.cmp_format({
+            maxwidth = 50,
+            ellipsis_char = "...",
+          }),
+        },
       })
     end,
   },

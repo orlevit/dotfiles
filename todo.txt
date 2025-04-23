@@ -18,5 +18,8 @@ https://www.youtube.com/watch?v=NJDu_53T_4M&t=33s
 
 ! important !
 For pylint knowledge of the project, add to project folder a file name ".pylintrc" with:
+```
 [MASTER]
-init-hook = 'import sys; sys.path.append("/path/to/workdir")'
+init-hook = 'import sys; sys.path.append(0, os.getcwd())'
+```
+Always open nvim in the root directory of the project

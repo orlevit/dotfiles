@@ -33,6 +33,16 @@ git clone https://github.com/orlevit/dotfiles.git
 cd dotfile 
 source run.sh
 ```
+### Neovim Usage:
+If you using Python, you need that the linter will have a sense of the projet files.
+For pylint (the linter), add to project folder a file name ".pylintrc" with:
+
+```
+[MASTER]
+init-hook = 'import sys; sys.path.append(0, os.getcwd())'
+```
+
+Always open nvim in the root directory of the project.
 
 ## Plugins
 
@@ -46,20 +56,41 @@ source run.sh
 - **`ripgrep`**: A fast search tool like `grep`, but optimized for recursive search and written in Rust.
 - **`bat`**: A `cat` clone with syntax highlighting and Git integration to view file contents in a more readable format.
 - **`tldr`**: Simplified and community-driven man pages to provide practical examples for common commands.
+- **`yazi`**: Blazing fast terminal file manager written in Rust, based on asynchronous I/O, with built-in previews and plugin support. :contentReference[oaicite:0]{index=0}  
+- **`lsd`**: Modern, Rust-powered replacement for `ls` that adds colors, icons, tree view, and extra formatting options. :contentReference[oaicite:1]{index=1}  
 
 #### Nvim Plugins
-- **`alpha.lua`**: Start screen with configurable sections.
-- **`catppuccin.lua`**: Catppuccin theme.
-- **`completions.lua`**: Autocompletion configuration.
-- **`git-stuff.lua`**: Git integration and utilities.
-- **`lsp-config.lua`**: Configuration for the built-in Language Server Protocol (LSP).
-- **`neo-tree.lua`**: File explorer tree.
-- **`none-ls.lua`**: Configures Null LS to use external formatters and linters.
-- **`nvim-tmux-navigation.lua`**: Seamless navigation between Neovim and Tmux.
-- **`oil.lua`**: Remote file management.
-- **`telescope.lua`**: Fuzzy finder and picker.
-- **`treesitter.lua`**: Tree-sitter configurations and setup.
-- **`vim-test.lua`**: Run tests within the editor.
+- **`alpha.lua`**: Start screen with configurable sections.  
+- **`catppuccin.lua`**: Catppuccin theme.  
+- **`dressing.nvim.lua`**: Enhances `vim.ui.input` and `vim.ui.select` with improved pop-ups.  
+- **`indent-blankline.lua`**: Shows indent guides and context.  
+- **`lsp-config.lua`**: Sets up built-in LSP servers and diagnostics.  
+- **`nvim-tree.lua`**: Sidebar file explorer.  
+- **`telescope.lua`**: Fuzzy finder and picker framework.  
+- **`vim-easymotion.lua`**: Vim-EasyMotion for quick cursor jumps.  
+- **`autopairs.lua`**: Auto-inserts matching brackets, quotes, etc.  
+- **`comment.lua`**: Easy comment/uncomment helper.  
+- **`formatting.lua`**: Integrates external formatters (e.g., Prettier, Black).  
+- **`iron.nvim.lua`**: REPL integration for interactive evaluation.  
+- **`lsp-lines.nvim.lua`**: Renders LSP diagnostics as virtual lines.  
+- **`nvim-treesitter-context.lua`**: Displays current code context at the top.  
+- **`todo-comments.nvim.lua`**: Highlights and navigates TODO/FIXME comments.  
+- **`vim-surround.lua`**: Adds, changes, and deletes surrounding delimiters.  
+- **`auto-session.lua`**: Automatically saves and restores Neovim sessions.  
+- **`completions.lua`**: Autocompletion setup (e.g., nvim-cmp).  
+- **`gitsigns.nvim.lua`**: Git change indicators in the sign column.  
+- **`lazygit.lua`**: Integrates Lazygit TUI inside Neovim.  
+- **`lualine.lua`**: Fast and easy statusline.  
+- **`nvim-treesitter-textobjects.lua`**: Treesitter-powered text objects.  
+- **`treesitter.lua`**: Core Tree-sitter parsing and highlighting.  
+- **`vim-visual-multi.lua`**: Multiple cursors for simultaneous edits.  
+- **`bufferline.nvim.lua`**: Buffer/tab line with icons and diagnostics.  
+- **`disabled/`**: Directory for configs you’ve disabled.  
+- **`image.nvim.lua`**: Inline image previews in buffers.  
+- **`linting.lua`**: Linter integration (e.g., nvim-lint).  
+- **`substitute.lua`**: Enhanced substitute operations (`:S`-style).  
+- **`trouble.lua`**: Pretty diagnostics list and quickfix UI.  
+- **`vim.zoom.lua`**: Zooms and restores individual splits.  
 
 ## Organization
 #### Main directories and files:

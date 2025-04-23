@@ -49,3 +49,6 @@ alias rgrep="rgrep --color"
 
 # text editor alias
 alias te="gnome-text-editor"
+
+# Nvim 
+alias n="nvim"
