@@ -205,3 +205,71 @@ else
         fi
     fi
 fi
+
+# ----------------------
+# Yazi installation
+# ----------------------
+
+if type -p yazi > /dev/null; then
+    echo "yazi already installed" >> "$LOG_FILE"
+else
+    # Try snap first
+    if type -p snap > /dev/null; then
+        echo "installing yazi via snap" >> "$LOG_FILE"
+        sudo snap install yazi --classic
+
+    # Fallback to cargo (requires Rust toolchain)
+    elif type -p cargo > /dev/null; then
+        echo "installing yazi via cargo" >> "$LOG_FILE"
+        cargo install yazi-fm
+        mkdir -p ~/.local/bin
+        ln -sf ~/.cargo/bin/yazi ~/.local/bin/yazi
+
+    else
+        echo "no installer found for yazi (need snap or cargo)" >> "$LOG_FILE"
+    fi
+
+    # Confirm install
+    if type -p yazi > /dev/null; then
+        echo "yazi Installed" >> "$LOG_FILE"
+    else
+        echo "yazi FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
+# ----------------------
+# LSD installation
+# ----------------------
+
+if type -p lsd > /dev/null; then
+    echo "lsd already installed" >> "$LOG_FILE"
+else
+    # Try apt (Ubuntu 24.04 has lsd in universe)
+    if type -p apt > /dev/null; then
+        echo "installing lsd via apt" >> "$LOG_FILE"
+        sudo apt update
+        sudo apt install -y lsd
+
+    # Fallback to snap
+    elif type -p snap > /dev/null; then
+        echo "installing lsd via snap" >> "$LOG_FILE"
+        sudo snap install lsd --classic
+
+    # Fallback to cargo
+    elif type -p cargo > /dev/null; then
+        echo "installing lsd via cargo" >> "$LOG_FILE"
+        cargo install lsd
+        mkdir -p ~/.local/bin
+        ln -sf ~/.cargo/bin/lsd ~/.local/bin/lsd
+
+    else
+        echo "no installer found for lsd (need apt, snap, or cargo)" >> "$LOG_FILE"
+    fi
+
+    # Confirm install
+    if type -p lsd > /dev/null; then
+        echo "lsd Installed" >> "$LOG_FILE"
+    else
+        echo "lsd FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
