@@ -19,13 +19,14 @@ Minimalistic, effective, compatible with the bash shell and easy to install!
 - [Organization](#Organization)
 
 # Demos
-Unix terminal:
-
-![](https://github.com/orlevit/dotfiles/blob/master/images/dotfiles_demo.gif)
 
 Neovim:
 
 ![](https://github.com/orlevit/dotfiles/blob/master/images/neovim_demo.gif)
+
+Unix terminal:
+
+![](https://github.com/orlevit/dotfiles/blob/master/images/dotfiles_demo.gif)
 
 ## Installation
 ```
