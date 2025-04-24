@@ -13,7 +13,7 @@ Additionly, Neovim plugins are installed to provide an IDE-like experience.
 Minimalistic, effective, compatible with the bash shell and easy to install!
 
 # Table of contents:
-- [Demo](#Demo)
+- [Demos](#Demos)
 - [Installation](#Installation)
 - [Plugins](#Plugins)
 - [Organization](#Organization)
