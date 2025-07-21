@@ -29,11 +29,12 @@ return {
         },
         window = {
           completion = cmp.config.window.bordered(),
+          -- completion.zindex = 2001,
           documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-j>"] = cmp.mapping.select_next_item(),
-          ["<C-k>"] = cmp.mapping.select_prev_item(),
+          ["<C-k>"] = cmp.mapping.select_next_item(),
+          ["<C-j>"] = cmp.mapping.select_prev_item(),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-c>"] = cmp.mapping.complete(),
@@ -51,6 +52,40 @@ return {
             maxwidth = 50,
             ellipsis_char = "...",
           }),
+        },
+      })
+      
+    -- Due to Copilot, needed changes 
+    -- Because of Copliot, we need to ensure that the completion menu is always on top
+    -- if the completion menu is not on top , increase the  "zindex" value.
+    cmp.setup({
+      window = {
+        completion = {
+          border = "rounded",
+          zindex = 2001,  -- this ensures popup is on top
+          winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+          scrolloff = 0,
+          col_offset = 0,
+          side_padding = 1,
+        },
+        documentation = {
+          border = "rounded",
+          zindex = 2000,  -- slightly below the menu
+        },
+      },
+    })
+
+    -- the first suggestion it fro the buttom
+    cmp.setup({
+        view = {
+          docs = {
+            auto_open = true,
+          },
+          entries = {
+            follow_cursor = false,
+            name = "custom",
+            selection_order = "bottom_up", -- this starts selection from bottom
+          },
         },
       })
     end,
