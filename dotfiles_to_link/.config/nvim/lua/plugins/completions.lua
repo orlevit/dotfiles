@@ -62,7 +62,7 @@ return {
       window = {
         completion = {
           border = "rounded",
-          zindex = 2001,  -- this ensures popup is on top
+          zindex = 20001,  -- this ensures popup is on top
           winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
           scrolloff = 0,
           col_offset = 0,
@@ -70,7 +70,7 @@ return {
         },
         documentation = {
           border = "rounded",
-          zindex = 2000,  -- slightly below the menu
+          zindex = 20000,  -- slightly below the menu
         },
       },
     })
