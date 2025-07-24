@@ -95,15 +95,15 @@ fi
 # tpm (Tmux Plugin Manager) installation
 # --------------------------------------------
 
-if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
+if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tmux_plugin_manager" ]; then
     echo "tpm already installed" >> $LOG_FILE
 else
-    git clone https://github.com/tmux-plugins/tpm $PATH_TO_ADDITIONAL_PACKAGES/tpm
+    git clone https://github.com/tmux-plugins/tpm $PATH_TO_ADDITIONAL_PACKAGES/tmux_plugin_manager
 
-    if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
-        echo "tpm Installed" >> $LOG_FILE
+    if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tmux_plugin_manager" ]; then
+        echo "tmux_plugin_manager Installed" >> $LOG_FILE
     else
-        echo "tpm FAILED TO INSTALL!!!" >> $LOG_FILE
+        echo "tmux_plugin_manager FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
 fi
 
