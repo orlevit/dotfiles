@@ -52,10 +52,10 @@ link() {
         done
 
         # Symlink tpm to ~/.tmux/plugins/tpm if it exists
-        if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tpm" ]; then
+        if [ -d "$PATH_TO_ADDITIONAL_PACKAGES/tmux_plugin_manager" ]; then
             mkdir -p "$HOME/.tmux/plugins"
-            ln -svf "$PATH_TO_ADDITIONAL_PACKAGES/tpm" "$HOME/.tmux/plugins/tpm"
-            echo "Linked tpm to $HOME/.tmux/plugins/tpm"
+            ln -svf "$PATH_TO_ADDITIONAL_PACKAGES/tmux_plugin_manager" "$HOME/.tmux/plugins/tmux_plugin_manager"
+            echo "Linked tpm to $HOME/.tmux/plugins/tmux_plugin_manager/tpm"
         else
             echo "$PROMPT tpm is not installed in $PATH_TO_ADDITIONAL_PACKAGES"
         fi

@@ -160,3 +160,7 @@ if [ -f "/usr/share/virtualenvwrapper/virtualenvwrapper.sh" ]; then
 elif [ -f "$HOME/.py_global_env/bin/virtualenvwrapper.sh" ]; then
     source $HOME/.py_global_env/bin/virtualenvwrapper.sh
 fi
+
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS="@im=ibus"
