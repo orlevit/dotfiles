@@ -39,7 +39,14 @@ return {
         },
       },
       filters = {
-        custom = { ".DS_Store" },
+        custom = { 
+            ".DS_Store",
+            "__pycache__",
+            "*.pyc",
+            ".git",
+            "node_modules",
+            ".pytest_cache"
+          }
       },
       git = {
         ignore = false,

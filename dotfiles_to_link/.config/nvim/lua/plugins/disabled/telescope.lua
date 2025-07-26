@@ -41,14 +41,14 @@ return {
     }
     local builtin = require("telescope.builtin")
 
-    vim.keymap.set("n", "<leader>tp", function() builtin.find_files(opts) end, { desc = "Telescope ▶ Preview‑top vertical find_files" })
-    vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Fuzzy find files in cwd" })
-    vim.keymap.set("n", "<leader>tg", function() builtin.live_grep(opts) end, { desc = "Find string in cwd" })
-    vim.keymap.set("n", "<leader>to", builtin.oldfiles, { desc = "Fuzzy find recent files" })
-    vim.keymap.set("n", "<leader>tc", function() builtin.grep_string(opts) end,{ desc = "Find string under cursor in cwd" })
-    vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Find keymaps" })
-    vim.keymap.set("n", "<leader>tb", builtin.buffers, { desc = "Find among open buffers" })
-    vim.keymap.set("n", "<leader>tm", builtin.marks, { desc = "Find marks" })
-    vim.keymap.set("n", "<leader>tt", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+    vim.keymap.set("n", "<leader>fp", function() builtin.find_files(opts) end, { desc = "Telescope ▶ Preview‑top vertical find_files" })
+    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in cwd" })
+    vim.keymap.set("n", "<leader>fg", function() builtin.live_grep(opts) end, { desc = "Find string in cwd" })
+    vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Fuzzy find recent files" })
+    vim.keymap.set("n", "<leader>fc", function() builtin.grep_string(opts) end,{ desc = "Find string under cursor in cwd" })
+    vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find keymaps" })
+    vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find among open buffers" })
+    vim.keymap.set("n", "<leader>fm", builtin.marks, { desc = "Find marks" })
+    vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
   end,
 }

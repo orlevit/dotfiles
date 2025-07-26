@@ -86,6 +86,28 @@ return {
             },
           },
         })
+        
+      local venv = os.getenv("VIRTUAL_ENV")
+      local python_bin = venv and (venv .. "/bin/python") or "python"
+
+      lspconfig.pylsp.setup({
+        cmd = { python_bin, "-m", "pylsp" },
+        capabilities = capabilities,
+        settings = {
+          pylsp = {
+            plugins = {
+              pylint = {
+                enabled = true,
+                args = { "--disable=C0115" },
+              },
+              pyflakes = { enabled = true },
+              mccabe = { enabled = true },
+              rope_autoimport = { enabled = true },
+            },
+          },
+        },
+      })
+
 				--   ["pylsp"] = function()
 				--   lspconfig.pylsp.setup({
 				--     capabilities = capabilities,
