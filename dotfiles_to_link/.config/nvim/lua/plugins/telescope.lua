@@ -50,5 +50,10 @@ return {
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find among open buffers" })
     vim.keymap.set("n", "<leader>fm", builtin.marks, { desc = "Find marks" })
     vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+    vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Git Branches" })
+    vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Git Commits" })
+    vim.keymap.set("n", "<leader>gC", builtin.git_bcommits, { desc = "Git Buffer Commits" }) -- current file only
+    vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Git Status" })
+    vim.keymap.set("n", "<leader>gS", builtin.git_stash, { desc = "Git Stash" }) -- You may need a custom diff if you want hunks
   end,
 }
