@@ -47,7 +47,7 @@ return {
 		vim.keymap.set("n", "<leader>]t", "<cmd>+tabmove<cr>", { desc = "Move tab right" })
 
 		-- Pick a buffer
-		vim.keymap.set("n", "gt", "<cmd>BufferLinePick<cr>", { desc = "Pick buffer" })
+		vim.keymap.set("n", "<leader>tg", "<cmd>BufferLinePick<cr>", { desc = "Pick buffer" })
 
 		-- Close a buffer
 		vim.keymap.set("n", "<leader>td", "<cmd>BufferLinePickClose<cr>", { desc = "Pick buffer to close" })
