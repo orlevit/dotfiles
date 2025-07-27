@@ -106,6 +106,18 @@ return {
             },
           },
         },
+        -- 👇 Force PYTHONPATH so LSP can resolve 'app'
+        on_init = function(client)
+          local root_dir = client.config.root_dir
+          local current_pythonpath = vim.env.PYTHONPATH or ""
+          local updated_pythonpath = root_dir .. ":" .. current_pythonpath
+          client.config.settings.python = {
+            analysis = {
+              extraPaths = { root_dir },
+            },
+          }
+          vim.env.PYTHONPATH = updated_pythonpath
+        end,
       })
 
 				--   ["pylsp"] = function()
