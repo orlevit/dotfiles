@@ -39,8 +39,8 @@ return {
 
 		-- Define keymaps for bufferline operations
 		-- Navigate between tabs
-		vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-		vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
+		vim.keymap.set("n", "<C-S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+		vim.keymap.set("n", "<C-S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
 
 		-- Switch places
 		vim.keymap.set("n", "<leader>[t", "<cmd>-tabmove<cr>", { desc = "Move tab left" })
