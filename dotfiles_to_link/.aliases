@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source .constants
+
 # Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
@@ -52,3 +54,7 @@ alias te="gnome-text-editor"
 
 # Nvim 
 alias n="nvim"
+
+# Camera recording aliases
+alias cst="$PATH_CUSTOM_SCRIPTS_CONFIG/start_camera_recording.sh"
+alias csp="$PATH_CUSTOM_SCRIPTS_CONFIG/stop_camera_recording.sh"

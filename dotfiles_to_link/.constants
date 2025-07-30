@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Videos recording in background
+BG_VIDEOS_OUT_DIR="$HOME/Videos/bg_recording"
+PATH_CUSTOM_SCRIPTS_CONFIG="$HOME/.custom_scripts"  # Path to the custom_scripts configuration directory
