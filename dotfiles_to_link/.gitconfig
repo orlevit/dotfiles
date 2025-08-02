@@ -6,13 +6,12 @@
 	default = simple
   
 [core]
-	editor = vim
+	editor = nvim
   pager = delta
 
 [alias]
 	bsu = branch --set-upstream-to=origin/master
 	dog = log --all --decorate --oneline --graph
-	hist = log --all --decorate --oneline --graph
 
 [interactive]
     diffFilter = delta --color-only
@@ -21,17 +20,21 @@
     navigate = true    # use n and N to move between diff sections
     side-by-side = true
 
-
-    # delta detects terminal colors automatically; set one of these to disable auto-detection
-    # dark = true
-    # light = true
-
 [merge]
     conflictstyle = diff3
+    tool = meld
 
 [diff]
     colorMoved = default
+    tool = meld
+
+[mergetool "meld"]
+    path = /usr/bin/meld
+    trustExitCode = true
+    keepBackup = false
+    
 [credential]
 	helper = store
+
 [http]
 	postBuffer = 524288000
