@@ -157,6 +157,22 @@ else
 fi
 
 # ----------------------
+# Meld installation
+# ----------------------
+
+if type -p meld > /dev/null; then
+    echo "meld already installed" >> $LOG_FILE
+else
+    sudo apt-get update && sudo apt-get install -y meld
+
+    if type -p meld > /dev/null; then
+        echo "meld Installed" >> $LOG_FILE
+    else
+        echo "meld FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+# ----------------------
 # Kitty installation
 # ----------------------
 
