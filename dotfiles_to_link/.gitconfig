@@ -28,6 +28,12 @@
     colorMoved = default
     tool = meld
 
+[difftool]
+    prompt = false 
+
+[mergetool]
+    prompt = false
+
 [mergetool "meld"]
     path = /usr/bin/meld
     trustExitCode = true
