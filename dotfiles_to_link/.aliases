@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source .constants
+source "$HOME/.constants"
 
 # Easier navigation
 alias ..="cd .."
@@ -54,6 +54,9 @@ alias te="gnome-text-editor"
 
 # Nvim 
 alias n="nvim"
+
+# Lazygit
+alias lg="lazygit"
 
 # Camera recording aliases
 alias cst="$PATH_CUSTOM_SCRIPTS_CONFIG/start_camera_recording.sh"
