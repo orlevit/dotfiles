@@ -34,6 +34,10 @@ git clone https://github.com/orlevit/dotfiles.git
 cd dotfile 
 source run.sh
 ```
+
+### Note:
+If you have any secret keys, than create the file `dotfiles_to_link/.keys` with any keys you want to export ( Like: `export OPENAI_API_KEY="..."`)
+
 ### Neovim Usage:
 If you using Python, you need that the linter will have a sense of the projet files.
 For pylint (the linter), add to project folder a file name ".pylintrc" with:

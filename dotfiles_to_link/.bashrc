@@ -161,7 +161,13 @@ elif [ -f "$HOME/.py_global_env/bin/virtualenvwrapper.sh" ]; then
     source $HOME/.py_global_env/bin/virtualenvwrapper.sh
 fi
 
+# Emojis
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS="@im=ibus"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# Source the keys (like OPENAI key)
+if [[ -f ".keys" ]]; then
+    source ".keys"
+fi

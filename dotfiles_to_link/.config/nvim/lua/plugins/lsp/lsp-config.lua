@@ -103,8 +103,8 @@ return {
 					vim.keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "Show LSP type definitions" })
 					vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { desc = "See available code actions" })
 					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Smart rename" })
-					vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show buffer diagnostics" })
-					vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+					vim.keymap.set("n", "<leader>Db", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show buffer diagnostics" })
+					vim.keymap.set("n", "<leader>Dl", vim.diagnostic.open_float, { desc = "Show line diagnostics" })
 					vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Go to previous diagnostic" })
 					vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Go to next diagnostic" })
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show documentation for what is under cursor" })
@@ -216,7 +216,7 @@ return {
 							local current_pythonpath = vim.env.PYTHONPATH or ""
 							local new_pythonpath = site_packages .. ":" .. root_dir .. ":" .. current_pythonpath
 							vim.env.PYTHONPATH = new_pythonpath
-							print("Set PYTHONPATH to:", new_pythonpath)
+							--print("Set PYTHONPATH to:", new_pythonpath)
 						end
 					end
 				end,

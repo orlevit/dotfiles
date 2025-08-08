@@ -14,6 +14,7 @@ return {
     telescope.setup({
       defaults = {
         path_display = { "smart" },
+        file_ignore_patterns = { ".*_env/.*" },  -- ignore any path containing a folder that ends with _env
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
