@@ -145,9 +145,9 @@ return {
 								maxLineLength = 100,
 							},
 							-- Enable pyflakes (error detection)
-							pyflakes = { 
-								enabled = true,
-							},
+							-- pyflakes = { 
+							-- 	enabled = true,
+							-- },
 							-- Disable mccabe (complexity checking)
 							mccabe = { 
 								enabled = false,
