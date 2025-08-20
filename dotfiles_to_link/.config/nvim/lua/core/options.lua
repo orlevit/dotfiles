@@ -37,6 +37,7 @@ vim.opt.foldlevel = 99          -- Keep all folds open
 vim.opt.conceallevel = 2 --Cleaner look when reading markdown
 vim.wo.number = true
 vim.wo.relativenumber = true
+-- vim.api.nvim_set_hl(0, "LineNr", { fg = "#FFFFFF" }) -- brighter white relative number lines (since plugin cappucine is used, it override this one)
 vim.opt.linebreak = true -- Breaks long lines at word boundaries rather than in the middle of words.
 vim.opt.list = true --  Shows hidden characters like spaces and tabs visually.
 vim.opt.pumblend = 10 --Adds transparency to popup menus.

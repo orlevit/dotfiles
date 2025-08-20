@@ -14,6 +14,11 @@ end, { desc = "Toggle search highlighting" })
 -- NORMAL MODE
 vim.keymap.set("n", "<Tab>", ">>", { noremap = true, silent = true })      -- indent line
 vim.keymap.set("n", "<S-Tab>", "<<", { noremap = true, silent = true })    -- unindent line
+
+-- INSERT MODE
+vim.keymap.set("i", "<Tab>", "<Esc>>>i", { noremap = true, silent = true })
+vim.keymap.set("i", "<S-Tab>", "<Esc><<i", { noremap = true, silent = true })
+
 -- VISUAL MODE
 vim.keymap.set("v", "<Tab>", ">gv", { noremap = true, silent = true })     -- indent and reselect
 vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })   -- unindent and reselect
@@ -46,3 +51,17 @@ vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window He
 vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+
+-- Insert black lines
+vim.keymap.set("n", "<leader>o", "o<Esc>", { desc = "Insert blank line below (stay in normal mode)" })
+vim.keymap.set("n", "<leader>O", "O<Esc>", { desc = "Insert blank line above (stay in normal mode)" })
+
+-- The direction of n and N depends on whether / or ? was used for searching forward or backward respectively.
+-- This is pretty confusing to me.
+-- If you want n to always search forward and N backward, use this:
+vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
+vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
+vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })

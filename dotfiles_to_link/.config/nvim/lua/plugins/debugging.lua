@@ -100,7 +100,7 @@ return {
         type = 'python',
         request = 'launch',
         name = 'Django',
-        program = vim.fn.getcwd() .. '/manage.py',
+        program = vim.fn.getcwd() .. '/src/manage.py',
         args = { 'runserver', '--noreload' },
         django = true,
         pythonPath = detect_python(),

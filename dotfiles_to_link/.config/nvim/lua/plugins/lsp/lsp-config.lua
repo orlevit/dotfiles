@@ -28,7 +28,6 @@ return {
 				"tailwindcss",
 				"emmet_ls",
 				"eslint",
-				"pylsp", -- Use pylsp instead of pyright
 			},
 		},
 	},
@@ -161,6 +160,7 @@ return {
 								enabled = true,
 								completions = { enabled = true },
 								code_actions = { enabled = true },
+                definitions = { enabled = false },
 							},
 							rope_completion = {
 								enabled = true,
