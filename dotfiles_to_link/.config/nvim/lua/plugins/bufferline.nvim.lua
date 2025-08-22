@@ -17,12 +17,21 @@ return {
 				return status
 			end,
 			-- Not showing if oil plugin installed
-      custom_filter = function(buf_number, buf_numbers)
-            local exclude_filetypes = { "NvimTree", "oil" }
+      custom_filter = function(buf_number, _)
             local ft = vim.bo[buf_number].filetype
+            local name = vim.fn.bufname(buf_number)
+            
+            -- Exclude NvimTree, Oil, and Quickfix buffers
+            local exclude_filetypes = { "NvimTree", "oil", "qf" }
             if vim.tbl_contains(exclude_filetypes, ft) then
                 return false
             end
+
+            -- Exclude unnamed buffers (like [No Name])
+            if name == "" then
+                return false
+            end
+
             return true
         end,
 			separator_style = "slant",
