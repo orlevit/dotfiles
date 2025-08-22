@@ -1,6 +1,6 @@
 return {
 	"akinsho/bufferline.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons"},
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 	version = "*",
 	opts = {
 		options = {
@@ -17,11 +17,14 @@ return {
 				return status
 			end,
 			-- Not showing if oil plugin installed
-			custom_filter = function(buf_number, buf_numbers)
-				if vim.bo[buf_number].filetype ~= "oil" then
-					return true
-				end
-			end,
+      custom_filter = function(buf_number, buf_numbers)
+            local exclude_filetypes = { "NvimTree", "oil" }
+            local ft = vim.bo[buf_number].filetype
+            if vim.tbl_contains(exclude_filetypes, ft) then
+                return false
+            end
+            return true
+        end,
 			separator_style = "slant",
 			offsets = {
 				{
