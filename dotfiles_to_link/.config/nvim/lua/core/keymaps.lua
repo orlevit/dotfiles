@@ -16,8 +16,11 @@ vim.keymap.set("n", "<Tab>", ">>", { noremap = true, silent = true })      -- in
 vim.keymap.set("n", "<S-Tab>", "<<", { noremap = true, silent = true })    -- unindent line
 
 -- INSERT MODE
-vim.keymap.set("i", "<Tab>", "<Esc>>>i", { noremap = true, silent = true })
-vim.keymap.set("i", "<S-Tab>", "<Esc><<i", { noremap = true, silent = true })
+-- vim.keymap.set("i", "<Tab>", "<Esc>>>i", { noremap = true, silent = true })
+-- vim.keymap.set("i", "<S-Tab>", "<Esc><<i", { noremap = true, silent = true })
+vim.keymap.set("i", "<Tab>", "<C-o>>>", { noremap = true, silent = true })
+vim.keymap.set("i", "<S-Tab>", "<C-o><<", { noremap = true, silent = true })
+
 
 -- VISUAL MODE
 vim.keymap.set("v", "<Tab>", ">gv", { noremap = true, silent = true })     -- indent and reselect
@@ -35,7 +38,7 @@ vim.keymap.set("n", "V", "V", { noremap = true })
 vim.keymap.set("n", "<C-v>", "<C-v>", { noremap = true })
 
 -- # treminal exit
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true }, { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, desc = "Exit terminal mode" })
 -- ###
 --
 -- Move Lines
