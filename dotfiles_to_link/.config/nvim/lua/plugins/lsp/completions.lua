@@ -65,9 +65,9 @@ return {
         }),
         -- Sources for autocomplete ( Order matters!)
         sources = cmp.config.sources({
-          { name = "buffer" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
+          { name = "buffer" },
           { name = "path"   },
         }),
         formatting = { -- For vs-code like pictograms in completion menu

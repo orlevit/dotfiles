@@ -132,7 +132,7 @@ return {
 
 			-- Python LSP Configuration using pylsp
 			lspconfig.pylsp.setup({
-				cmd = { python_env.python, "-m", "pylsp" },
+				--cmd = { python_env.python, "-m", "pylsp" },
 				capabilities = capabilities,
 				settings = {
 					pylsp = {
@@ -158,12 +158,12 @@ return {
 							-- Enable rope for refactoring
 							rope_autoimport = { 
 								enabled = true,
-								completions = { enabled = true },
+								completions = { enabled = false },
 								code_actions = { enabled = true },
                 definitions = { enabled = false },
 							},
 							rope_completion = {
-								enabled = true,
+								enabled = false,
 							},
 							-- Jedi settings for completions and definitions
 							jedi_completion = {
