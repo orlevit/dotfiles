@@ -20,7 +20,11 @@ return {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next, -- move to next result
             ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ["<C-d>"] = actions.delete_buffer,
           },
+          n = {
+      ["<C-d>"] = actions.delete_buffer, -- close buffer in normal mode
+	  },
         },
       },
     })
@@ -46,7 +50,7 @@ return {
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in cwd" })
     vim.keymap.set("n", "<leader>fg", function() builtin.live_grep(opts) end, { desc = "Find string in cwd" })
     vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Fuzzy find recent files" })
-    vim.keymap.set("n", "<leader>fc", function() builtin.grep_string(opts) end,{ desc = "Find string under cursor in cwd" })
+    vim.keymap.set("n", "<leader>fc", function() builtin.grep_string(opts) end, { desc = "Find string under cursor in cwd" })
     vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find keymaps" })
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find among open buffers" })
     vim.keymap.set("n", "<leader>fm", builtin.marks, { desc = "Find marks" })
