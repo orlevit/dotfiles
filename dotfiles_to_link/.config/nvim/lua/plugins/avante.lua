@@ -26,7 +26,7 @@ return {
     opts = {
       -- Default mode & provider
       provider = "openai",      -- use OpenAI (ChatGPT / API key)
-      mode = "legacy",         -- "agentic" or "legacy" ; agentic uses tools
+      mode = "agentic",        -- "agentic" or "legacy" ; agentic uses tools
       -- Provider-specific configuration
       providers = {
         openai = {
@@ -37,7 +37,7 @@ return {
           -- Set that env var (example above).
           api_key = "OPENAI_API_KEY",
           -- A model that works for edits + reasoning. Change if you have access.
-          model = "gpt-4o-mini",
+          model = "gpt-4o",
           timeout = 60000, -- ms
           -- extra_request_body will be merged to the API request body if used
           extra_request_body = {
