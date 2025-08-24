@@ -1,21 +1,45 @@
 return {
-  "rmagatti/auto-session",
-  config = function()
-    local auto_session = require("auto-session")
+  'rmagatti/auto-session',
+  lazy = false,
+  dependencies = {
+    'nvim-telescope/telescope.nvim',
+  },
+  
+  keys = {
+    -- These are just mapping triggers, not the actual mapping functions
+    { '<leader>wr', desc = 'Restore Session' },
+    { '<leader>ws', desc = 'Save Session' },
+    { '<leader>wf', desc = 'Find Sessions' },
+  },
 
-    auto_session.setup({
-      auto_restore_enabled = false,
-      auto_session_suppress_dirs = { "~/",  "~/Downloads", "~/Documents", "~/Desktop/" },
+  config = function()
+    require('auto-session').setup({
+      auto_session_enable_last_session = false,
+      auto_session_root_dir = vim.fn.stdpath('data') .. '/sessions/',
+      auto_session_enabled = true,
+      auto_save_enabled = true,
+      auto_restore_enabled = true,
+      auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/', '/tmp', "~/Documents", "~/Desktop/" },
+      auto_session_use_git_branch = false,
+      bypass_session_save_file_types = { 'alpha', 'dashboard' },
+      
+      -- Set up session lens configuration
       session_lens = {
-        picker = nil, -- "telescope"|"snacks"|"fzf"|"select"|nil Pickers are detected automatically but you can also manually choose one. Falls back to vim.ui.select
         load_on_setup = true,
+        theme_conf = { border = true },
+        previewer = false,
+        buftypes_to_ignore = {}, -- list of buffer types that should not be deleted from current session
       },
     })
 
-    local keymap = vim.keymap
+    -- Load the telescope extension AFTER auto-session is setup
+    require('telescope').load_extension('session-lens')
 
-    keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" }) -- restore last workspace session for current directory
-    keymap.set("n", "<leader>ws", "<cmd>SessionSave<CR>", { desc = "Save session for auto session root dir" }) -- save workspace session for current working directory
-    keymap.set("n", "<leader>wf", require("auto-session.session-lens").search_session, { desc = "Search saved sessions", noremap = true, silent = true })
+    -- Set up keymaps after everything is loaded
+    vim.keymap.set('n', '<leader>wr', '<cmd>SessionRestore<CR>', { desc = 'Restore session for cwd' })
+    vim.keymap.set('n', '<leader>ws', '<cmd>SessionSave<CR>', { desc = 'Save session for auto session root dir' })
+    
+    -- Use the Telescope command directly instead of the Lua function
+    vim.keymap.set('n', '<leader>wf', '<cmd>Telescope session-lens search_session<CR>', { desc = 'Find sessions' })
   end,
 }
