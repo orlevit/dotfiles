@@ -192,19 +192,37 @@ vim.keymap.set({'n','x'}, ']b', function() goto_cell(1) end, {desc = "Next code 
 vim.keymap.set({'n','x'}, '[b', function() goto_cell(-1) end, {desc = "Previous code cell"})
 -- ##
 
--- Show diagnostics
-vim.diagnostic.config({
-  underline = false,
-  virtual_text = false,
-  signs = true,
-  update_in_insert = false,
-})
+-- ## Show diagnostics
+local show_diags = true
+-- function to configure diagnostics
+local function configure_diagnostics()
+    vim.diagnostic.config({
+        signs = show_diags,
+        underline = show_diags,
+        update_in_insert = false,
 
-local show_diags =true
+        -- always sort by severity
+        severity_sort = true,
+
+        -- only show highest severity in virtual text
+        virtual_text = {
+            severity = vim.diagnostic.severity.ERROR, -- change to WARN, INFO, HINT if you want
+            prefix = "●",
+        },
+    })
+end
+
+-- toggle keymap
 vim.keymap.set("n", "<leader>tv", function()
-  show_diags = not show_diags
-  vim.diagnostic.config({
-    signs        = show_diags,
-  })
+    show_diags = not show_diags
+    configure_diagnostics()
 end, { desc = "Toggle diagnostics" })
+
+-- call once on startup / file open
+configure_diagnostics()
+
+-- optional: auto-refresh when buffer is read
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufWinEnter" }, {
+    callback = configure_diagnostics,
+})
 -- ##
