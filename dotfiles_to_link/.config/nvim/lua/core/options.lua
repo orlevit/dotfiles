@@ -52,3 +52,7 @@ vim.opt.timeoutlen = 300 --Faster reaction time for keymaps (like which-key).
 -- Miscellaneous
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" } --What been save in session
 vim.g.root_lsp_ignore = { "copilot" }
+
+-- Add English spelling check ( go with [s/]s )
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
