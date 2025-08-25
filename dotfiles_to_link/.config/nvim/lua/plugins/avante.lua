@@ -104,7 +104,7 @@ return {
       -- Keymaps: adjust to taste
       local map = vim.keymap.set
       -- Toggle sidebar
-      map("n", "<leader>a", "<cmd>AvanteToggle<CR>", { desc = "Avante: Toggle" })
+      map("n", "<leader>aa", "<cmd>AvanteToggle<CR>", { desc = "Avante: Toggle" })
       -- Open inline prompt
       map("n", "<leader>ap", "<cmd>Avante<CR>", { desc = "Avante: Open prompt" })
       -- Switch provider (useful if you added multiple providers)
