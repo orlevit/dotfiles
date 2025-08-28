@@ -34,3 +34,31 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# View pull request comments in CLI by number
+gh_pr_comments() {
+  if [ -z "$1" ]; then
+    echo "Usage: gh_pr_comments <pr-number>"
+    return 1
+  fi
+
+  local pr_number=$1
+
+  # get "owner/repo" from git remote
+  local repo
+  repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
+
+  if [ -z "$repo" ]; then
+    echo "❌ Could not determine repo (are you in a git repo with GitHub remote?)"
+    return 1
+  fi
+
+  gh api repos/$repo/pulls/$pr_number/comments \
+    --jq '.[] | {file: .path, line: .original_line, user: .user.login, comment: .body, diff: .diff_hunk}' \
+  | jq -r --raw-output '
+    "\u001b[36mFile: \(.file):\u001b[33m\(.line)\u001b[0m\n" +
+    "\u001b[32mUser: \(.user)\u001b[0m\n" +
+    "Diff:\n\(.diff | split("\n") | .[-4:] | join("\n"))\n" +
+    "\u001b[35mComment:\n\(.comment)\u001b[0m\n---\n"
+  ' | cat
+}
