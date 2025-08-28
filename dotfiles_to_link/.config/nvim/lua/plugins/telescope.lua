@@ -67,11 +67,7 @@ return {
 		vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Git Status" })
 		vim.keymap.set("n", "<leader>gS", builtin.git_stash, { desc = "Git Stash" }) -- You may need a custom diff if you want hunks
 		vim.keymap.set("n", "<leader>fy", function()
-			local last_yank = vim.fn.getreg('"')
-			if last_yank == "" then
-				print("No yanked text found!")
-				return
-			end
+			local last_yank = vim.fn.getreg('0')
 			builtin.live_grep({ default_text = last_yank })
 		end, { desc = "Search last yanked text in project" })
 	end,
