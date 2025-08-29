@@ -35,30 +35,283 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# View and navigate pull request comments in Neovim
+gh_pr_comments_nvim() {
+  if [ -z "$1" ]; then
+    echo "Usage: gh_pr_comments_nvim <pr-number>"
+    return 1
+  fi
+  
+  local pr_number=$1
+  
+  # Get "owner/repo" from git remote
+  local repo
+  repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
+  if [ -z "$repo" ]; then
+    echo "❌ Could not determine repo (are you in a git repo with GitHub remote?)"
+    return 1
+  fi
+  
+  # Create a temporary file to store comment data
+  local temp_file="/tmp/gh_pr_comments_$$.json"
+  local vim_script="/tmp/gh_pr_nvim_script_$$.vim"
+  
+  # Fetch PR comments and save to temp file
+  echo "📥 Fetching PR #$pr_number comments..."
+  gh api repos/$repo/pulls/$pr_number/comments \
+    --jq '.[] | {
+      file: .path,
+      line: .original_line,
+      user: .user.login,
+      comment: .body,
+      diff: .diff_hunk,
+      position: .position,
+      created_at: .created_at
+    }' > "$temp_file"
+  
+  # Check if there are any comments
+  if [ ! -s "$temp_file" ]; then
+    echo "No comments found for PR #$pr_number"
+    rm -f "$temp_file"
+    return 1
+  fi
+  
+  # Count comments
+  local comment_count=$(jq -s 'length' "$temp_file")
+  echo "📝 Found $comment_count comment(s)"
+  
+  # Generate Vim script for marks and quickfix list
+  cat > "$vim_script" << 'VIMSCRIPT'
+" Clear previous PR comment marks
+delmarks A-Z
+
+" Clear quickfix list
+call setqflist([])
+
+" Function to add comment as virtual text or in location list
+function! AddPRComment(file, line, user, comment, date, mark)
+  " Add to quickfix list
+  let entry = {
+    \ 'filename': a:file,
+    \ 'lnum': a:line,
+    \ 'text': '[' . a:user . ' - ' . a:date . '] ' . substitute(a:comment, '\n', ' ', 'g')
+    \ }
+  call setqflist([entry], 'a')
+  
+  " Set mark for this comment
+  if filereadable(a:file)
+    " Save current buffer state
+    let current_buf = bufnr('%')
+    
+    " Open file without forcing save
+    execute 'edit! ' . fnameescape(a:file)
+    
+    " Go to the line
+    execute a:line
+    
+    " Set the mark
+    execute 'mark ' . a:mark
+    
+    " Format date for readability
+    let formatted_date = substitute(a:date, 'T.*', '', '')
+    
+    " Add comment as Python comment (language-specific)
+    let comment_lines = []
+    call add(comment_lines, '')
+    call add(comment_lines, '# >>> PR Comment [' . a:user . ' - ' . formatted_date . ']:')
+    
+    " Split long comments into multiple lines
+    let comment_text = substitute(a:comment, '\r', '', 'g')
+    let lines = split(comment_text, '\n')
+    for comment_line in lines
+      " Word wrap long lines at 80 characters
+      let wrapped_lines = []
+      let current_line = comment_line
+      while len(current_line) > 75
+        let wrap_pos = 75
+        " Try to break at word boundary
+        while wrap_pos > 50 && current_line[wrap_pos] !~ '\s'
+          let wrap_pos -= 1
+        endwhile
+        if wrap_pos <= 50
+          let wrap_pos = 75
+        endif
+        
+        call add(wrapped_lines, '# ' . current_line[0:wrap_pos-1])
+        let current_line = current_line[wrap_pos:]
+        let current_line = substitute(current_line, '^\s*', '', '')
+      endwhile
+      call add(wrapped_lines, '# ' . current_line)
+      
+      for wrapped_line in wrapped_lines
+        call add(comment_lines, wrapped_line)
+      endfor
+    endfor
+    call add(comment_lines, '# <<< End PR Comment')
+    call add(comment_lines, '')
+    
+    " Insert comment lines above the target line
+    call append(a:line - 1, comment_lines)
+    
+    " Don't force save - let user decide
+  endif
+endfunction
+
+
+
+" Function to remove only PR comment markers from current buffer
+function! CleanPRComments()
+  " Remove PR comment blocks including the empty lines we added
+  let save_cursor = getpos('.')
+  
+  " Find and remove each PR comment block
+  silent! g/^# >>> PR Comment/,/^# <<< End PR Comment/d
+  
+  " Remove the specific empty lines we added (the ones surrounding PR comments)
+  " This is tricky - we'll look for patterns of empty lines that were likely ours
+  " First pass: remove double empty lines that might have been created
+  silent! %s/\n\n\n/\r\r/g
+  
+  call setpos('.', save_cursor)
+  echo "PR comments cleaned from current buffer"
+endfunction
+
+nnoremap <leader>clean :call CleanPRComments()<CR>
+
+echo "PR Comments loaded! Use <leader>clean to remove comment markers"
+VIMSCRIPT
+  
+  # Process comments and create Vim commands
+  local mark_char=65  # ASCII for 'A'
+  
+  jq -r --raw-output '.file + "|" + (.line|tostring) + "|" + .user + "|" + .comment + "|" + .created_at' "$temp_file" | while IFS='|' read -r file line user comment created_at; do
+    if [ -n "$file" ] && [ -n "$line" ] && [ "$line" != "null" ]; then
+      # Clean comment for Vim (escape single quotes properly)
+      comment_clean=$(echo "$comment" | sed "s/'/\\\\\\\\'/g")
+      user_clean=$(echo "$user" | sed "s/'/\\\\\\\\'/g")
+      date_clean=$(echo "$created_at" | sed "s/'/\\\\\\\\'/g")
+      file_clean=$(echo "$file" | sed "s/'/\\\\\\\\'/g")
+      mark=$(printf "\\$(printf '%03o' $mark_char)")
+      
+      # Add Vim command to set mark and add comment
+      echo "call AddPRComment('$file_clean', $line, '$user_clean', '$comment_clean', '$date_clean', '$mark')" >> "$vim_script"
+      
+      # Increment mark character
+      mark_char=$((mark_char + 1))
+      if [ $mark_char -gt 90 ]; then  # Reset after 'Z'
+        mark_char=65
+      fi
+    fi
+  done
+  
+  # Add commands to open quickfix window at the end
+  cat >> "$vim_script" << 'VIMEOF'
+
+" Open quickfix window and go to first comment
+copen 8
+wincmd p
+if !empty(getqflist())
+  cfirst
+  normal! zz
+endif
+VIMEOF
+  
+  # Create a summary file
+  local summary_file="/tmp/gh_pr_summary_$$.md"
+  cat > "$summary_file" << EOF
+# Pull Request #$pr_number Comments
+
+## Navigation Keys:
+- \`<leader>clean\` - Remove all PR comment markers from current buffer
+
+## Comments Overview:
+EOF
+  
+  # Add comments to summary with better formatting
+  local idx=0
+  jq -c '.' "$temp_file" | while IFS= read -r json; do
+    file=$(echo "$json" | jq -r '.file')
+    line=$(echo "$json" | jq -r '.line')
+    user=$(echo "$json" | jq -r '.user')
+    comment=$(echo "$json" | jq -r '.comment')
+    created=$(echo "$json" | jq -r '.created_at')
+    formatted_date=$(echo "$created" | sed 's/T.*//')
+    mark_letter=$(printf "\\$(printf '%03o' $((65 + idx)))")
+    
+    cat >> "$summary_file" << EOF
+
+### [$mark_letter] $file:$line
+**Author:** $user  
+**Date:** $formatted_date  
+**Comment:**
+$(echo "$comment" | sed 's/^/> /')
+
+---
+EOF
+    idx=$((idx + 1))
+    if [ $idx -ge 26 ]; then
+      idx=0
+    fi
+  done
+  
+  # Launch Neovim with the script
+  echo "🚀 Opening Neovim with PR comments..."
+  
+  # Get first file that exists
+  local first_file=""
+  while IFS= read -r file; do
+    if [ -f "$file" ]; then
+      first_file="$file"
+      break
+    fi
+  done < <(jq -r 'select(.file != null) | .file' "$temp_file")
+  
+  if [ -n "$first_file" ]; then
+    # Open Neovim with the summary in a vertical split
+    nvim -c "source $vim_script" -c "vsplit $summary_file" -c "wincmd h" "$first_file"
+  else
+    echo "⚠️  No valid files found locally - opening summary only"
+    nvim "$summary_file"
+  fi
+  
+  # Cleanup temp files after Neovim exits
+  rm -f "$temp_file" "$vim_script" "$summary_file"
+}
+
 # View pull request comments in CLI by number
 gh_pr_comments() {
   if [ -z "$1" ]; then
     echo "Usage: gh_pr_comments <pr-number>"
     return 1
   fi
-
+  
   local pr_number=$1
-
-  # get "owner/repo" from git remote
+  
+  # Get "owner/repo" from git remote
   local repo
   repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
-
   if [ -z "$repo" ]; then
     echo "❌ Could not determine repo (are you in a git repo with GitHub remote?)"
     return 1
   fi
-
+  
+  echo "📥 Fetching PR #$pr_number comments..."
+  
   gh api repos/$repo/pulls/$pr_number/comments \
-    --jq '.[] | {file: .path, line: .original_line, user: .user.login, comment: .body, diff: .diff_hunk}' \
+    --jq '.[] | {
+      file: .path, 
+      line: .original_line, 
+      user: .user.login, 
+      comment: .body, 
+      diff: .diff_hunk,
+      created_at: .created_at
+    }' \
   | jq -r --raw-output '
-    "\u001b[36mFile: \(.file):\u001b[33m\(.line)\u001b[0m\n" +
+    "\u001b[36mFile: \(.file):\u001b[33m\(.line)\u001b[0m" +
+    "\u001b[90m (\(.created_at | split("T")[0]))\u001b[0m\n" +
     "\u001b[32mUser: \(.user)\u001b[0m\n" +
     "Diff:\n\(.diff | split("\n") | .[-4:] | join("\n"))\n" +
-    "\u001b[35mComment:\n\(.comment)\u001b[0m\n---\n"
+    "\u001b[35mComment:\n\(.comment)\u001b[0m\n" +
+    "\u001b[90m" + ("─" * 60) + "\u001b[0m\n"
   ' | cat
 }
