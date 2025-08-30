@@ -5,17 +5,30 @@ return {
 	opts = {
 		options = {
 			mode = "tabs",
-			diagnostics = "nvim_lsp",
 			show_buffer_close_icons = false,
+
 			-- How to render diagnostics
-			diagnostics_indicator = function(count, level, diagnostics_dict, context)
-				local status = ""
-				for e, n in pairs(diagnostics_dict) do
-					status = status .. (e == "error" and n .. " " or "")
-					status = status .. (e == "warning" and n .. " " or "")
-				end
-				return status
-			end,
+      -- only show for the current buffer in this tab
+      diagnostics_indicator = function(_, _, _, context)
+        if not context.buffer:current() then
+          return ""
+        end
+
+        local bufnr = vim.api.nvim_get_current_buf()
+        local errors = #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.ERROR })
+        local warnings = #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.WARN })
+
+        local status = ""
+        if errors > 0 then
+          status = status .. errors .. " "
+        end
+        if warnings > 0 then
+          status = status .. warnings .. " "
+        end
+
+        return status
+      end,
+
 			-- Not showing if oil plugin installed
       custom_filter = function(buf_number, _)
             local ft = vim.bo[buf_number].filetype
