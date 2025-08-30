@@ -6,7 +6,7 @@ return {
 		options = {
 			mode = "tabs",
 			show_buffer_close_icons = false,
-
+      diagnostics = "nvim_lsp",
 			-- How to render diagnostics
       -- only show for the current buffer in this tab
       diagnostics_indicator = function(_, _, _, context)
