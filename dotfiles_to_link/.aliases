@@ -61,3 +61,6 @@ alias lg="lazygit"
 # Camera recording aliases
 alias cst="$PATH_CUSTOM_SCRIPTS_CONFIG/start_camera_recording.sh"
 alias csp="$PATH_CUSTOM_SCRIPTS_CONFIG/stop_camera_recording.sh"
+
+# fd finder
+alias fd=fdfind

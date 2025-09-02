@@ -194,6 +194,24 @@ else
 fi
 
 # ----------------------
+# fd-find installation
+# ----------------------
+
+if type -p fd > /dev/null || type -p fdfind > /dev/null; then
+    echo "fd-find already installed" >> $LOG_FILE
+else
+    sudo apt update
+    sudo apt install -y fd-find
+
+    # Check installation
+    if type -p fd > /dev/null || type -p fdfind > /dev/null; then
+        echo "fd-find Installed" >> $LOG_FILE
+    else
+        echo "fd-find FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+# ----------------------
 # Virtualenvwrapper installation
 # ----------------------
 
