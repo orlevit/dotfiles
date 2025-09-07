@@ -307,3 +307,66 @@ else
         echo "lsd FAILED TO INSTALL!!!" >> "$LOG_FILE"
     fi
 fi
+
+# -------------------------
+# Install pipx
+# -------------------------
+if type -p "pipx" > /dev/null; then
+    echo "pipx already installed" >> "$LOG_FILE"
+else
+    python3 -m pip install --user pipx
+    python3 -m pipx ensurepath
+
+    if type -p "pipx" > /dev/null; then
+        echo "pipx Installed" >> "$LOG_FILE"
+    else
+        echo "pipx FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
+# -------------------------
+# Install rofi
+# -------------------------
+if type -p "rofi" > /dev/null; then
+    echo "rofi already installed" >> "$LOG_FILE"
+else
+    sudo apt update
+    sudo apt install -y rofi
+
+    if type -p "rofi" > /dev/null; then
+        echo "rofi Installed" >> "$LOG_FILE"
+    else
+        echo "rofi FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
+# -------------------------
+# Install rofimoji via pipx
+# -------------------------
+if pipx list | grep -q "rofimoji"; then
+    echo "rofimoji already installed via pipx" >> "$LOG_FILE"
+else
+    pipx install rofimoji
+
+    if pipx list | grep -q "rofimoji"; then
+        echo "rofimoji Installed via pipx" >> "$LOG_FILE"
+    else
+        echo "rofimoji FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
+# -------------------------
+# Install xscreensaver
+# -------------------------
+if type -p "xscreensaver" > /dev/null; then
+    echo "xscreensaver already installed" >> "$LOG_FILE"
+else
+    sudo apt update
+    sudo apt install -y xscreensaver
+
+    if type -p "xscreensaver" > /dev/null; then
+        echo "xscreensaver Installed" >> "$LOG_FILE"
+    else
+        echo "xscreensaver FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
