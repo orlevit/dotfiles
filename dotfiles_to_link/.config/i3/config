@@ -1,5 +1,5 @@
 # winkey as master key
-set $mod Mod4
+set $mod Mod1
 
 # Font for window titles.
 font pango:Ubuntu Mono 12
@@ -148,7 +148,7 @@ bindsym $mod+Shift+grave exec --no-startup-id ~/.config/rofi/scripts/i3_cycle_ba
 bindsym $mod+w exec --no-startup-id ~/.config/rofi/scripts/wifi_connection.sh
 
 # Lock screen
-bindsym $mod+Mod1+l exec xscreensaver-command -lock
+bindsym $mod+Mod4+l exec xscreensaver-command -lock
 
 # windows no appear in beginning after reaching the end
 focus_wrapping no
@@ -169,7 +169,10 @@ exec --no-startup-id dex --autostart --environment i3
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Add key to agent on startup - no password necessary
-exec --no-startup-id ssh-add -q ~/.ssh/id_ed25519
-
+exec --no-startup-id ~/.config/ssh-add-startup.sh
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
+# Simple script that changes title
+# Install wmctrl first: sudo apt install wmctrl
+# Add this to your keybinding
+bindsym $mod+n exec ~/.config/i3/scripts/rename-window.sh
