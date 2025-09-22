@@ -174,3 +174,9 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 if [[ -f ".keys" ]]; then
     source ".keys"
 fi
+
+# Source the Zoxide plugin
+eval "$(zoxide init bash)"
+
+# Add pycharm to path
+export PATH="$PATH:$HOME/.local/share/pycharm-2025.2.0.1/bin"

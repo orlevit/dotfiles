@@ -13,7 +13,7 @@ return {
 
       iron.setup {
         config = {
-          scratch_repl = true,
+          scratch_repl = false,
           repl_definition = {
             sh = {
               command = { "bash" }
@@ -34,7 +34,7 @@ return {
         },
 keymaps = {
           toggle_repl = "<space>rr",
-          restart_repl = "<space>rR",
+          -- restart_repl = "<space>rR",
           -- send_motion = "<space>rs",
           -- visual_send = "<space>rs",
           -- send_file = "<space>rf",
@@ -57,7 +57,16 @@ keymaps = {
         },
         ignore_blank_lines = true,
       }
-
+      -- Proper restart that kills old process
+      vim.keymap.set('n', '<space>rR', function()
+        local ft = vim.bo.filetype
+        -- First close the REPL properly
+        require("iron.core").close_repl(ft)
+        -- Wait a moment for cleanup
+        vim.defer_fn(function()
+          require("iron.core").repl_for(ft)
+        end, 100)
+      end, { noremap = true, silent = true, desc = "Restart REPL" })
       -- Override Vim behavior for the need of r won't replace text
       vim.keymap.set('n', '<space>rs', function() iron.send_motion() end, { noremap = true, silent = true, desc = "Send motion to REPL" })
       vim.keymap.set('v', '<space>rs', function() iron.visual_send() end, { noremap = true, silent = true, desc = "Send visual selection to REPL" })
