@@ -34,6 +34,9 @@ HISTFILESIZE=2000
 HISTCONTROL=ignoredups:erasedups
 PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
+# Add local user programs to path
+export PATH="$HOME/.local/bin:$PATH"
+
 # Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 

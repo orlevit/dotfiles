@@ -122,27 +122,6 @@ return {
     })
   end,
   dependencies = {
-    -- Required dependency for image rendering in Kitty
-    {
-      "3rd/image.nvim",
-      opts = {
-        backend = "kitty", -- Use Kitty graphics protocol
-        integrations = {
-          markdown = {
-            enabled = true,
-            clear_in_insert_mode = false,
-            download_remote_images = true,
-            only_render_image_at_cursor = false,
-            filetypes = { "markdown", "vimwiki" },
-          },
-        },
-        max_width = nil,
-        max_height = nil,
-        max_width_window_percentage = 50,
-        max_height_window_percentage = 50,
-        kitty_method = "normal",
-      },
-    },
     -- Better cell navigation for Python files
     {
       "GCBallesteros/NotebookNavigator.nvim",

@@ -14,15 +14,17 @@ echo "Installation Log for date: $(date)" > $LOG_FILE
 if type -p autojump > /dev/null; then
     echo "autojump already installed" >> $LOG_FILE
 else
-    git clone git://github.com/wting/autojump.git $PATH_TO_ADDITIONAL_PACKAGES/autojump
-    cd $PATH_TO_ADDITIONAL_PACKAGES/autojump && ./install.py 
+    git clone https://github.com/wting/autojump.git $PATH_TO_ADDITIONAL_PACKAGES/autojump
 
-    if type -p autojump > /dev/null; then
+    pushd "$PATH_TO_ADDITIONAL_PACKAGES/autojump" >/dev/null
+    cd $PATH_TO_ADDITIONAL_PACKAGES/autojump && ./install.py 
+    
+    if [ -x "$PATH_TO_ADDITIONAL_PACKAGES/fzf/bin/fzf" ]; then
         echo "autojump Installed" >> $LOG_FILE
     else
         echo "autojump FAILED TO INSTALL!!!" >> $LOG_FILE
     fi
-    cd -
+    popd >/dev/null
 fi
 
 # ----------------------
@@ -90,6 +92,24 @@ else
         echo "ripgrep FAILED TO INSTALL via apt!!!" >> $LOG_FILE
     fi
 fi
+
+# ----------------------
+# tmux installation
+# ----------------------
+
+if type -p tmux > /dev/null; then
+    echo "tmux already installed" >> "$LOG_FILE"
+else
+    sudo apt update
+    sudo apt install -y tmux
+
+    if type -p tmux > /dev/null; then
+        echo "tmux Installed" >> "$LOG_FILE"
+    else
+        echo "tmux FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
 
 # --------------------------------------------
 # tpm (Tmux Plugin Manager) installation
@@ -186,7 +206,16 @@ else
     ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
 
     # Confirm install
-    if type -p kitty > /dev/null; then
+    if type -p  ~/.local/bin/kitty > /dev/null; then
+    
+    	# Create desktop integration files using kitty's built-in method
+	cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+	cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+
+	# Update the paths in the desktop files
+	sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+	sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+
         echo "kitty Installed" >> $LOG_FILE
     else
         echo "kitty FAILED TO INSTALL!!!" >> $LOG_FILE
@@ -308,14 +337,31 @@ else
     fi
 fi
 
+
+# -------------------------
+# Install pip
+# -------------------------
+if type -p "pip3" > /dev/null; then
+    echo "pip3 already installed" >> "$LOG_FILE"
+else
+    echo "Installing pip3..." >> "$LOG_FILE"
+    sudo apt update && sudo apt install -y python3-pip
+    if type -p "pip3" > /dev/null; then
+        echo "pip3 Installed" >> "$LOG_FILE"
+    else
+        echo "pip3 FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
+
 # -------------------------
 # Install pipx
 # -------------------------
 if type -p "pipx" > /dev/null; then
     echo "pipx already installed" >> "$LOG_FILE"
 else
-    python3 -m pip install --user pipx
-    python3 -m pipx ensurepath
+    sudo apt update && sudo apt install pipx
+    pipx ensurepath
 
     if type -p "pipx" > /dev/null; then
         echo "pipx Installed" >> "$LOG_FILE"
