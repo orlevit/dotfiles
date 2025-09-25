@@ -416,3 +416,54 @@ else
         echo "xscreensaver FAILED TO INSTALL!!!" >> "$LOG_FILE"
     fi
 fi
+
+# ----------------------
+# xclip installation
+# ----------------------
+
+if type -p "xclip" > /dev/null; then
+    echo "xclip is already installed" >> $LOG_FILE
+else
+    sudo apt update && sudo apt install -y xclip
+
+    if type -p "xclip" > /dev/null; then
+        echo "xclip installed successfully" >> $LOG_FILE
+    else
+        echo "xclip installation FAILED!!!" >> $LOG_FILE
+    fi
+fi
+
+# ----------------------
+# LazyGit installation
+# ----------------------
+
+if type -p "lazygit" > /dev/null; then
+    echo "LazyGit is already installed" >> $LOG_FILE
+else
+    echo "Installing LazyGit..." >> $LOG_FILE
+
+    pushd . >/dev/null
+    cd /tmp
+
+    # Get latest version
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]*')
+    
+    # Download and extract
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf lazygit.tar.gz
+
+    # Move binary
+    sudo mv lazygit /usr/local/bin/
+
+    # Clean up
+    rm lazygit.tar.gz
+
+    # Verify installation
+    if type -p "lazygit" > /dev/null; then
+        echo "LazyGit installed successfully" >> $LOG_FILE
+    else
+        echo "LazyGit installation FAILED!!!" >> $LOG_FILE
+    fi
+
+    popd >/dev/null
+fi

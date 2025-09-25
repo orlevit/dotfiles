@@ -13,13 +13,15 @@ else
     sudo apt-get update
     sudo apt-get install -y build-essential cmake gettext
     
-    mkdir tmp && cd /tmp
+    pushd "./" >/dev/null        
+    cd /tmp
+
     git clone https://github.com/neovim/neovim.git
     cd neovim
     git checkout v0.11.3
     make CMAKE_BUILD_TYPE=Release
     sudo make install
-    cd ../.. && rm -rf tmp
+    popd >/dev/null
 
     if type -p "nvim" > /dev/null; then
         installed_version=$(nvim --version | head -n1)
