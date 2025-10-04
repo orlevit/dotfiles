@@ -7,7 +7,7 @@ return {
     event = "BufReadPost",
     opts = {
       provider_selector = function(bufnr, filetype, buftype)
-        return { "lsp", "treesitter"}
+        return { "treesitter", "indent"}
       end,
       open_fold_hl_timeout = 0,
       close_fold_kinds_for_ft = {},
