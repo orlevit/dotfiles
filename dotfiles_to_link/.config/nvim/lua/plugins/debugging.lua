@@ -162,11 +162,17 @@ return {
       --- @param options nvim_dap_virtual_text_options Current options for nvim-dap-virtual-text
       --- @return string|nil A text how the variable should be displayed or nil, if this variable shouldn't be displayed
       display_callback = function(variable, buf, stackframe, node, options)
-        -- Filter out variables that are too long or not useful
-        if variable.value and string.len(variable.value) > 100 then
-          return variable.name .. ' = <' .. variable.type .. '>'
+        -- Skip internal/hidden variables (starting with __)
+        if variable.name:match('^__') then
+          return nil  -- Don't display at all
         end
-        -- Always format for end of line display
+        
+        -- Skip very long values
+        if variable.value and string.len(variable.value) > 150 then
+          return variable.name .. ' = <' .. (variable.type or 'long value') .. '>'
+        end
+        
+        -- Clean format: just name = value
         return variable.name .. ' = ' .. variable.value
       end,
       
@@ -180,21 +186,38 @@ return {
                                            -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
     })
 
-    -- Set up listeners for dapui
+    -- -- Set up listeners for dapui
     dap.listeners.after.event_initialized['dapui_config'] = function()
       dapui.open()
     end
-    dap.listeners.before.event_terminated['dapui_config'] = function()
-      dapui.close()
-    end
-    dap.listeners.before.event_exited['dapui_config'] = function()
-      dapui.close()
-    end
+    -- dap.listeners.before.event_terminated['dapui_config'] = function()
+    --   dapui.close()
+    -- end
+    -- dap.listeners.before.event_exited['dapui_config'] = function()
+    --   dapui.close()
+    -- end
 
     -- Set up virtual text refresh on debug events
     dap.listeners.after.event_stopped['nvim-dap-virtual-text'] = function()
       require('nvim-dap-virtual-text').refresh()
     end
+    -- Captures error messages from stderr and displays them as Neovim
+    dap.listeners.after.event_output['notify_output'] = function(session, body)
+    if body.category == 'stderr' then
+        vim.notify(body.output, vim.log.levels.ERROR)
+      end
+    end
+
+    -- Configure DAP REPL completion keybindings
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'dap-repl',
+      callback = function(args)
+        -- Enable completion navigation with Ctrl+j/k
+        vim.keymap.set('i', '<C-j>', '<C-n>', { buffer = args.buf, desc = 'Next completion' })
+        vim.keymap.set('i', '<C-k>', '<C-p>', { buffer = args.buf, desc = 'Previous completion' })
+        
+      end,
+    })
 
     -- Define custom highlight groups for better visibility
     vim.schedule(function()
