@@ -26,7 +26,7 @@ return {
     opts = {
       -- Default mode & provider
       provider = "openai",      -- use OpenAI (ChatGPT / API key)
-      mode = "agentic",        -- "agentic" or "legacy" ; agentic uses tools
+      mode = "legacy",         -- "agentic" or "legacy" ; legacy prevents infinite loops
       -- Provider-specific configuration
       providers = {
         openai = {
@@ -37,12 +37,12 @@ return {
           -- Set that env var (example above).
           api_key = "OPENAI_API_KEY",
           -- A model that works for edits + reasoning. Change if you have access.
-          model = "gpt-4o",
+          model = "gpt-4o-mini",
           timeout = 60000, -- ms
           -- extra_request_body will be merged to the API request body if used
           extra_request_body = {
             temperature = 0,
-            max_tokens = 8192,
+            max_tokens = 4192,
           },
         },
         morph = {
@@ -63,7 +63,8 @@ return {
 
       -- Behavior toggles
       behaviour = {
-        enable_fastapply = true, -- set true only if you set up Morph apply service (see README)
+        enable_fastapply = false, -- set true only if you set up Morph apply service (see README)
+        auto_apply_diff_after_generation = false, -- disable auto-inserting suggestions
       },
 
       -- RAG service off by default; enable only if you want local RAG container
@@ -91,13 +92,6 @@ return {
     },
 
     config = function(_, opts)
-      -- ensure auxiliary plugins are configured first (if present)
-      local has = vim.fn.has
-      -- If render-markdown is installed, register Avante filetype
-      pcall(function()
-        require("render-markdown").setup({ file_types = { "markdown", "Avante" } })
-      end)
-
       -- call setup
       require("avante").setup(opts)
 
