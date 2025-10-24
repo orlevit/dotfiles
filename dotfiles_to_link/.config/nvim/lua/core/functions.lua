@@ -226,3 +226,13 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufWinEnter" }, {
     callback = configure_diagnostics,
 })
 -- ##
+--
+vim.keymap.set('n', '<leader>gt', function()
+  vim.lsp.buf.definition({
+    on_list = function(options)
+      vim.cmd('tabnew')                     -- open a new tab
+      vim.fn.setqflist({}, ' ', options)    -- use LSP location list
+      vim.cmd('cfirst')                     -- jump to first result
+    end,
+  })
+end, { desc = 'Go to definition in new tab' })
