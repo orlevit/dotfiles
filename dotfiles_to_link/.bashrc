@@ -175,8 +175,26 @@ if [[ -f ".keys" ]]; then
     source ".keys"
 fi
 
-# Source the Zoxide plugin
-eval "$(zoxide init bash)"
+# Use pyenv
+#NOTE: If it OK then pyenv-virtualenv can replace virtualenvwrapper
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+eval "$(pyenv virtualenv-init -)"
 
-# Add pycharm to path
-export PATH="$PATH:$HOME/.local/share/pycharm-2025.2.0.1/bin"
+## SSH agent setup
+# Start ssh-agent if not already running
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    eval "$(ssh-agent -s)" > /dev/null
+fi
+
+# Add your SSH key if not already added
+SSH_KEY="$HOME/.ssh/id_ed25519"
+if ! ssh-add -l | grep -q "$(ssh-keygen -lf "$SSH_KEY" | awk '{print $2}')"; then
+    ssh-add "$SSH_KEY" 2>/dev/null
+fi
+# # Add pycharm to path
+# export PATH="$PATH:$HOME/.local/share/pycharm-2025.2.0.1/bin"
+
+# # Source the Zoxide plugin
+# eval "$(zoxide init bash)"

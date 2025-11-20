@@ -143,6 +143,12 @@ return {
 
             local python_env = get_python_venv()
 
+            local function goto_definition_in_tab()
+                -- force definitions into a fresh tab to keep the current window intact
+                vim.cmd("tab split")
+                vim.lsp.buf.definition()
+            end
+
             -- Keymaps when LSP attaches
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -150,9 +156,10 @@ return {
                     vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", { desc = "Show LSP references in Telescope" })
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show LSP references in Quickfix" })
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+                    vim.keymap.set("n", "gt", goto_definition_in_tab, { desc = "LSP definitions in new tab" })
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Show LSP definitions" })
                     vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "Show LSP implementations" })
-                    vim.keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "Show LSP type definitions" })
+                    -- vim.keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "Show LSP type definitions" })
                     vim.keymap.set({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, { desc = "See available code actions" })
                     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Smart rename" })
                     vim.keymap.set("n", "<leader>Db", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show buffer diagnostics" })
