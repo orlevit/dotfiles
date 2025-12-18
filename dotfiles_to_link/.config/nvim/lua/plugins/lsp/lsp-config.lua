@@ -28,19 +28,24 @@ return {
             { "folke/neodev.nvim", opts = {} },
         },
         config = function()
-            local lspconfig = require("lspconfig")
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            local mason_lspconfig = require("mason-lspconfig")
-            local mason_tool_installer = require("mason-tool-installer")
+            local ok_lspconfig, lspconfig = pcall(require, "lspconfig")
+            if not ok_lspconfig then
+                return
+            end
 
-            mason_tool_installer.setup({
-                ensure_installed = {
-                    "prettier",
-                    "stylua",
-                    "isort",
-                    "black",
-                },
-            })
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            local ok_mti, mason_tool_installer = pcall(require, "mason-tool-installer")
+            if ok_mti and type(mason_tool_installer.setup) == "function" then
+                mason_tool_installer.setup({
+                    ensure_installed = {
+                        "prettier",
+                        "stylua",
+                        "isort",
+                        "black",
+                    },
+                })
+            end
 
             -- Python virtual environment detection
             local function get_python_venv()
@@ -149,6 +154,41 @@ return {
                 vim.lsp.buf.definition()
             end
 
+            -- Shared pylsp settings so we can reapply them if a default setup sneaks in
+            local pylsp_settings = {
+                pylsp = {
+                    configurationSources = { "pyflakes" },
+                    plugins = {
+                        pycodestyle = {
+                            enabled = true,
+                            ignore = { "W503", "W504", "E203" },  -- Ignore Black-incompatible rules
+                            maxLineLength = 120  -- Generous default, project configs will override
+                        },
+                        pyflakes = { enabled = true },
+                        mccabe = { enabled = false },
+                        pylint = { enabled = false },
+                        rope_autoimport = { enabled = true, completions = { enabled = false }, code_actions = { enabled = true }, definitions = { enabled = false } },
+                        rope_completion = { enabled = false },
+                        jedi_completion = { enabled = true, include_params = true, include_class_objects = true, fuzzy = true },
+                        jedi_definition = { enabled = true, follow_imports = true, follow_builtin_imports = true },
+                        jedi_hover = { enabled = true },
+                        jedi_references = { enabled = true },
+                        jedi_signature_help = { enabled = true },
+                        jedi_symbols = { enabled = true, all_scopes = true, include_import_symbols = true },
+                        yapf = { enabled = false },
+                        autopep8 = { enabled = false },
+                    },
+                },
+            }
+
+            local function apply_pylsp_settings(client)
+                if client.name ~= "pylsp" then
+                    return
+                end
+                client.config.settings = vim.tbl_deep_extend("force", client.config.settings or {}, pylsp_settings)
+                client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+            end
+
             -- Keymaps when LSP attaches
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -171,82 +211,74 @@ return {
                 end,
             })
 
-            -- Setup mason-lspconfig servers
-            mason_lspconfig.setup({
-                ensure_installed = {
-                    "html",
-                    "lua_ls",
-                    "ts_ls",
-                    "cssls",
-                    "tailwindcss",
-                    "emmet_ls",
-                    "eslint",
-                    "pylsp",
+            -- Only ensure tools are installed; configure servers manually to avoid duplicate clients.
+            local ok_mlc, mason_lspconfig = pcall(require, "mason-lspconfig")
+            if ok_mlc and type(mason_lspconfig.setup) == "function" then
+                mason_lspconfig.setup({
+                    ensure_installed = {
+                        "html",
+                        "lua_ls",
+                        "ts_ls",
+                        "cssls",
+                        "tailwindcss",
+                        "emmet_ls",
+                        "eslint",
+                        "pylsp",
+                    },
+                    automatic_installation = false,
+                })
+            end
+
+            -- pylsp with explicit settings to kill pycodestyle diagnostics
+            lspconfig.pylsp.setup({
+                capabilities = capabilities,
+                init_options = { plugins = { pycodestyle = { enabled = false } } },
+                settings = pylsp_settings,
+                cmd_env = { PYLSP_DISABLED_PLUGINS = "pycodestyle" },
+                single_file_support = true,
+                on_attach = function(client, bufnr)
+                    apply_pylsp_settings(client)
+                end,
+                on_new_config = function(new_config)
+                    new_config.settings = vim.tbl_deep_extend("force", new_config.settings or {}, pylsp_settings)
+                end,
+                flags = { debounce_text_changes = 150 },
+            })
+
+            -- custom lua_ls
+            lspconfig.lua_ls.setup({
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = { globals = { "vim", "require" } },
+                        workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+                        telemetry = { enable = false },
+                    },
                 },
-                automatic_installation = false,
-                handlers = {
-                    -- default handler
-                    function(server_name)
-                        lspconfig[server_name].setup({ capabilities = capabilities })
-                    end,
-                    -- custom pylsp
-                    ["pylsp"] = function()
-                        lspconfig.pylsp.setup({
-                            capabilities = capabilities,
-                            settings = {
-                                pylsp = {
-                                    plugins = {
-                                        pycodestyle = { enabled = false, ignore = { "W391" }, maxLineLength = 100 },
-                                        pyflakes = { enabled = true },
-                                        mccabe = { enabled = false },
-                                        pylint = { enabled = false },
-                                        rope_autoimport = { enabled = true, completions = { enabled = false }, code_actions = { enabled = true }, definitions = { enabled = false } },
-                                        rope_completion = { enabled = false },
-                                        jedi_completion = { enabled = true, include_params = true, include_class_objects = true, fuzzy = true },
-                                        jedi_definition = { enabled = true, follow_imports = true, follow_builtin_imports = true },
-                                        jedi_hover = { enabled = true },
-                                        jedi_references = { enabled = true },
-                                        jedi_signature_help = { enabled = true },
-                                        jedi_symbols = { enabled = true, all_scopes = true, include_import_symbols = true },
-                                        yapf = { enabled = false },
-                                        autopep8 = { enabled = false },
-                                    },
-                                },
-                            },
-                            -- on_init = function(client)
-                            --     local root_dir = client.config.root_dir
-                            --     local source_paths = setup_pythonpath(root_dir, python_env.venv_path)
-                            --     
-                            --     print("pylsp initialized for:", root_dir)
-                            --     print("Using Python:", python_env.python)
-                            --     print("Virtual environment:", python_env.venv_path or "None")
-                            --     print("Detected source paths:", table.concat(source_paths, ", "))
-                            --     print("PYTHONPATH:", vim.env.PYTHONPATH)
-                            -- end,
-                            flags = { debounce_text_changes = 150 },
-                        })
-                    end,
-                    -- custom lua_ls
-                    ["lua_ls"] = function()
-                        lspconfig.lua_ls.setup({
-                            capabilities = capabilities,
-                            settings = {
-                                Lua = {
-                                    diagnostics = { globals = { "vim", "require" } },
-                                    workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-                                    telemetry = { enable = false },
-                                },
-                            },
-                        })
-                    end,
-                    -- custom emmet_ls
-                    ["emmet_ls"] = function()
-                        lspconfig.emmet_ls.setup({
-                            capabilities = capabilities,
-                            filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
-                        })
-                    end,
-                },
+            })
+
+            -- Manual setup for the remaining servers
+            local default_servers = { "html", "ts_ls", "cssls", "tailwindcss", "emmet_ls", "eslint" }
+            for _, server in ipairs(default_servers) do
+                lspconfig[server].setup({ capabilities = capabilities })
+            end
+
+            -- Ensure only one pylsp instance stays attached (avoids stray default clients)
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("PylspSingleInstance", {}),
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if not client or client.name ~= "pylsp" then
+                        return
+                    end
+                    apply_pylsp_settings(client)
+                    local clients = vim.lsp.get_clients({ name = "pylsp" })
+                    for _, c in ipairs(clients) do
+                        if c.id ~= client.id then
+                            vim.lsp.stop_client(c.id)
+                        end
+                    end
+                end,
             })
         end,
     },
