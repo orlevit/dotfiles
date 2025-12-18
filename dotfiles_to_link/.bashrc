@@ -26,7 +26,8 @@ shopt -s globstar
 
 # Set the editor of the command line & general to vi
 set -o vi
-export EDITOR=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # Don't put duplicate lines or lines starting with space in the history
 HISTSIZE=1000

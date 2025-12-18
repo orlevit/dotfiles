@@ -1,6 +1,3 @@
-local lazypath='/home/orlevitas/dev/dotfiles/Additional_packages/lazy.vim'
-local lazypath='/home/orlevitas/dev/dotfiles/Additional_packages/lazy.vim'
-local lazypath='/home/orlevitas/dev/dotfiles/Additional_packages/lazy.vim'
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
