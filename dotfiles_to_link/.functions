@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Navigate up N directories
+up() {
+  local dir_count=${1:-1}  # Default to 1 if no argument is provided
+  cd "$(printf '../%.0s' $(seq 1 $dir_count))" || return
+}
+
 # Create a new directory and enter it
 function mkd() {
 	mkdir -p "$@" && cd "$_";

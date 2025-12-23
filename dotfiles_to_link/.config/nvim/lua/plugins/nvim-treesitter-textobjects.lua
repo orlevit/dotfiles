@@ -26,8 +26,8 @@ return {
             ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
             ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
 
-            ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
-            ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+            ["ae"] = { query = "@function.outer", desc = "Select outer part of a function(entity) definition" }, -- entity
+            ["ie"] = { query = "@function.inner", desc = "Select inner part of a function(entity) definition" },
 
             ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
             ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
@@ -37,11 +37,11 @@ return {
           enable = true,
           swap_next = {
             ["<leader>na"] = "@parameter.inner", -- swap parameters/argument with next
-            ["<leader>nm"] = "@function.outer", -- swap function with next
+            ["<leader>ne"] = "@function.outer", -- swap function with next
           },
           swap_previous = {
             ["<leader>pa"] = "@parameter.inner", -- swap parameters/argument with prev
-            ["<leader>pm"] = "@function.outer", -- swap function with previous
+            ["<leader>pe"] = "@function.outer", -- swap function with previous
           },
         },
         move = {
@@ -49,7 +49,7 @@ return {
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
             ["]f"] = { query = "@call.outer", desc = "Next function call start" },
-            ["]m"] = { query = "@function.outer", desc = "Next method/function def start" },
+            ["]e"] = { query = "@function.outer", desc = "Next function(entity) def start" },
             ["]c"] = { query = "@class.outer", desc = "Next class start" },
             ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
             ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
@@ -61,21 +61,21 @@ return {
           },
           goto_next_end = {
             ["]F"] = { query = "@call.outer", desc = "Next function call end" },
-            ["]M"] = { query = "@function.outer", desc = "Next method/function def end" },
+            ["]E"] = { query = "@function.outer", desc = "Next function(entity) def end" },
             ["]C"] = { query = "@class.outer", desc = "Next class end" },
             ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
             ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
           },
           goto_previous_start = {
             ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
-            ["[m"] = { query = "@function.outer", desc = "Prev method/function def start" },
+            ["[e"] = { query = "@function.outer", desc = "Prev function(entity) def start" },
             ["[c"] = { query = "@class.outer", desc = "Prev class start" },
             ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
             ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
           },
           goto_previous_end = {
             ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
-            ["[M"] = { query = "@function.outer", desc = "Prev method/function def end" },
+            ["[E"] = { query = "@function.outer", desc = "Prev function(entity) def end" },
             ["[C"] = { query = "@class.outer", desc = "Prev class end" },
             ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
             ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },

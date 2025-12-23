@@ -28,12 +28,20 @@ return {
             { "folke/neodev.nvim", opts = {} },
         },
         config = function()
-            local ok_lspconfig, lspconfig = pcall(require, "lspconfig")
-            if not ok_lspconfig then
+            if not vim.lsp or not vim.lsp.config then
                 return
             end
 
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            local lsp = vim.lsp
+            local default_config = lsp.config["*"] or {}
+            local default_capabilities = default_config.capabilities
+                and vim.deepcopy(default_config.capabilities)
+                or lsp.protocol.make_client_capabilities()
+            local capabilities = require("cmp_nvim_lsp").default_capabilities(default_capabilities)
+
+            lsp.config["*"] = vim.tbl_deep_extend("force", {}, default_config, {
+                capabilities = capabilities,
+            })
 
             local ok_mti, mason_tool_installer = pcall(require, "mason-tool-installer")
             if ok_mti and type(mason_tool_installer.setup) == "function" then
@@ -146,8 +154,6 @@ return {
                 return source_paths
             end
 
-            local python_env = get_python_venv()
-
             local function goto_definition_in_tab()
                 -- force definitions into a fresh tab to keep the current window intact
                 vim.cmd("tab split")
@@ -229,25 +235,24 @@ return {
                 })
             end
 
+            local servers_to_enable = {}
+            local function configure_server(name, config)
+                lsp.config(name, config or {})
+                table.insert(servers_to_enable, name)
+            end
+
             -- pylsp with explicit settings to kill pycodestyle diagnostics
-            lspconfig.pylsp.setup({
-                capabilities = capabilities,
+            configure_server("pylsp", {
                 init_options = { plugins = { pycodestyle = { enabled = false } } },
                 settings = pylsp_settings,
                 cmd_env = { PYLSP_DISABLED_PLUGINS = "pycodestyle" },
-                single_file_support = true,
-                on_attach = function(client, bufnr)
+                on_attach = function(client, _)
                     apply_pylsp_settings(client)
                 end,
-                on_new_config = function(new_config)
-                    new_config.settings = vim.tbl_deep_extend("force", new_config.settings or {}, pylsp_settings)
-                end,
-                flags = { debounce_text_changes = 150 },
             })
 
             -- custom lua_ls
-            lspconfig.lua_ls.setup({
-                capabilities = capabilities,
+            configure_server("lua_ls", {
                 settings = {
                     Lua = {
                         diagnostics = { globals = { "vim", "require" } },
@@ -260,7 +265,7 @@ return {
             -- Manual setup for the remaining servers
             local default_servers = { "html", "ts_ls", "cssls", "tailwindcss", "emmet_ls", "eslint" }
             for _, server in ipairs(default_servers) do
-                lspconfig[server].setup({ capabilities = capabilities })
+                configure_server(server)
             end
 
             -- Ensure only one pylsp instance stays attached (avoids stray default clients)
@@ -280,6 +285,10 @@ return {
                     end
                 end,
             })
+
+            if #servers_to_enable > 0 then
+                lsp.enable(servers_to_enable)
+            end
         end,
     },
 }
