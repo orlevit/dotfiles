@@ -467,3 +467,20 @@ else
 
     popd >/dev/null
 fi
+
+# ----------------------
+# Claude Code CLI installation
+# ----------------------
+
+if type -p "claude" > /dev/null; then
+    echo "Claude Code CLI already installed" >> $LOG_FILE
+else
+    echo "Installing Claude Code CLI..." >> $LOG_FILE
+    npm install -g @anthropic-ai/claude-code
+
+    if type -p "claude" > /dev/null; then
+        echo "Claude Code CLI installed successfully" >> $LOG_FILE
+    else
+        echo "Claude Code CLI installation FAILED!!!" >> $LOG_FILE
+    fi
+fi

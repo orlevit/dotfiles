@@ -44,6 +44,20 @@ link() {
                         # Symlink the subdirectory
                         ln -svf "$subdir" "$config_target"
                     done
+                elif [ "$filename" == ".claude" ] && [ -d "$object" ]; then
+                    # Handle .claude folder like .config (symlink individual files, not the whole dir)
+                    mkdir -p "$HOME/.claude"
+
+                    for subfile in "$object"/*; do
+                        subfile_name=$(basename "$subfile")
+                        claude_target="$HOME/$filename/$subfile_name"
+
+                        if [ -e "$claude_target" ]; then
+                            rm -rf "$claude_target"
+                        fi
+
+                        ln -svf "$subfile" "$claude_target"
+                    done
                 else
                     # Create symlink for other dotfiles
                     ln -svf "$object" "$target"

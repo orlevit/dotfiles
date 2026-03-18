@@ -8,7 +8,11 @@ return {
       use_default_keybindings = false,
       textobjects = {
         use_default_keybindings = false,
-      },
+        },
+      auto_start_server = {
+        enable = false,
+        file_pattern = { "*.ju.*" },
+        },
       -- other options...
     })
 
