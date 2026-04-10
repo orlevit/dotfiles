@@ -199,3 +199,4 @@ fi
 
 # # Source the Zoxide plugin
 # eval "$(zoxide init bash)"
+export PATH="$HOME/.npm-global/bin:$PATH"
