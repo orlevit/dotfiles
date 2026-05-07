@@ -1,0 +1,9 @@
+[opener]
+visidata = [
+  { run = 'vd "$@"', desc = "VisiData", block = true }
+]
+
+[open]
+rules = [
+  { mime = "text/csv", use = ["visidata"] },
+]
