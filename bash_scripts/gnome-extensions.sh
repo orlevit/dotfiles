@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Install gext (gnome-extensions-cli) via pipx
+if type -p "gext" > /dev/null; then
+    echo "gext already installed" >> "$LOG_FILE"
+else
+    pipx install gnome-extensions-cli --system-site-packages
+
+    if type -p "gext" > /dev/null; then
+        echo "gext Installed via pipx" >> "$LOG_FILE"
+    else
+        echo "gext FAILED TO INSTALL!!!" >> "$LOG_FILE"
+    fi
+fi
+
 # Install extensions
 gext install just-perfection-desktop@just-perfection
 gext install space-bar@luchrioh  

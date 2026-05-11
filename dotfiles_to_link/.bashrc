@@ -180,8 +180,10 @@ fi
 #NOTE: If it OK then pyenv-virtualenv can replace virtualenvwrapper
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
-eval "$(pyenv virtualenv-init -)"
+if command -v pyenv >/dev/null 2>&1; then
+    eval "$(pyenv init - bash)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 ## SSH agent setup
 # Start ssh-agent if not already running
