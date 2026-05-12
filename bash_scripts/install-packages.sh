@@ -495,6 +495,22 @@ else
 fi
 
 # ----------------------
+# Fantasque Sans font installation
+# ----------------------
+
+if fc-list | grep -qi "fantasque"; then
+    echo "fonts-fantasque-sans already installed" >> $LOG_FILE
+else
+    sudo apt-get install -y fonts-fantasque-sans && fc-cache -f
+
+    if fc-list | grep -qi "fantasque"; then
+        echo "fonts-fantasque-sans Installed" >> $LOG_FILE
+    else
+        echo "fonts-fantasque-sans FAILED TO INSTALL!!!" >> $LOG_FILE
+    fi
+fi
+
+# ----------------------
 # Claude Code CLI installation
 # ----------------------
 
