@@ -32,7 +32,7 @@
       }
     }
   },
-  "effortLevel": "low",
+  "effortLevel": "medium",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark"
 }
